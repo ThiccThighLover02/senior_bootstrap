@@ -1,1 +1,1 @@
-<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="css/main.min.css">

@@ -6,7 +6,7 @@
     <?php
         include "admin_links.php";
     ?>
-    <title>Senior Request</title>
+    <title>Senior System</title>
 </head>
 <!-- Toast for age start -->
 <div class="toast bg-danger position-absolute text-white text-right top-0 start-50 translate-middle-x" role="alert" aria-live="assertive" aria-atomic="true">

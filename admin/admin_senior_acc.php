@@ -16,7 +16,7 @@
     <?php
         include "admin_links.php";
     ?>
-    <title>Document</title>
+    <title>Senior System</title>
 </head>
   <body class="bg-light" style="overflow-x: hidden; background-size: cover;">
     <?php
@@ -96,7 +96,7 @@
         <div class="col-lg-6 bg-white">
         <div class="row">
             <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
+                <h2 class="text-primary"></h3>
                 <p class="fs-5">Male</p>
             </div>
             <div class="col-lg-6 d-flex flex-column">

@@ -6,7 +6,7 @@
     <?php
         include "admin_links.php";
     ?>
-    <title>Document</title>
+    <title>Admin Login</title>
 </head>
 <body class="bruh" style="background-image: url('../munisipyobckgrnd.jpg'); background-size: cover;">
     <div class="container bg-white mt-3 p-5 rounded" style="width: 50vw;">

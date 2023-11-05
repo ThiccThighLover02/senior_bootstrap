@@ -23,7 +23,7 @@
 //    Health Related Information
    $blood_type = $_POST['blood_type'];
    $physical_disability = $_POST['physical_disability'];
-   $check_conditions = $_POST['health'];
+   $check_conditions = serialize($_POST['health']);
    $other_conditions = $_POST['other_health']; 
 //    Highest Educational Attainment
    $education = $_POST['education'];
@@ -162,7 +162,7 @@
     else {
     
       $stmt_request = $conn->prepare("INSERT INTO `request_tbl`(`full_name`, `first_name`, `middle_name`, `last_name`, `extension`, `purok_id`, `barangay_id`, `municipality_id`, `province_id`, `birth_date`, `age`, `place_birth`, `sex`, `citizenship`, `physical_disability`, `health`, `other_health`, `education`, `senior_email`, `cell_no`, `emergency_no`, `civil_status`, `religion`, `id_pic`, `birth_certificate`, `barangay_certificate`, `request_date`, `request_time`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-      $stmt_request->bind_param("sssssiiiisissssssssiisssssss", $full_name, $firstN, $midN, $lastN, $extension, $purok, $barangay, $municipality, $province, $birth_date, $age, $birth_place, $sex, $citizen, $physical_disability, $health, $other_conditions, $education, $email, $cellno, $emergency_no, $civil_stat, $religion, $new_id_name, $new_birth_name, $new_bar_name, $request_date, $request_time);
+      $stmt_request->bind_param("sssssiiiisissssssssiisssssss", $full_name, $firstN, $midN, $lastN, $extension, $purok, $barangay, $municipality, $province, $birth_date, $age, $birth_place, $sex, $citizen, $physical_disability, $check_conditions, $other_conditions, $education, $email, $cellno, $emergency_no, $civil_stat, $religion, $new_id_name, $new_birth_name, $new_bar_name, $request_date, $request_time);
       $stmt_request->execute();
 
       $em = "sent";

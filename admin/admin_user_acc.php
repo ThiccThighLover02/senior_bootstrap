@@ -16,7 +16,7 @@
     <?php
         include "admin_links.php";
     ?>
-    <title>Document</title>
+    <title>Senior System</title>
 </head>
   <body class="bg-light" style="overflow-x: hidden; background-size: cover;">
     <?php

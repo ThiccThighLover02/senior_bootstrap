@@ -1,3 +1,7 @@
+<?php
+    include '../db_connect.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,15 +84,14 @@
                         <!-- Purok -->
                         <select name="purok" id="" name="purok" class="form-select form-select-lg" required>
                             <option value="" hidden>Purok</option>
-                            <option value="#1">#1</option>
-                            <option value="#2">#2</option>
-                            <option value="#3">#3</option>
-                            <option value="#4">#4</option>
-                            <option value="#5">#5</option>
-                            <option value="#6">#6</option>
-                            <option value="#7">#7</option>
-                            <option value="#8">#8</option>
-                            <option value="#9">#9</option>
+                        <?php
+                            $purok = mysqli_query($conn, "SELECT * FROM purok_tbl");
+                            while($row = mysqli_fetch_assoc($purok)){
+                        ?>
+                            <option value="<?= $row['purok_id'] ?>"> <?= $row['purok_no'] ?></option>
+                        <?php
+                            }
+                        ?>
                         </select>
                         <div class="invalid-feedback mb-1">
                           Require
@@ -98,7 +101,14 @@
                         <!-- Barangay -->
                         <select id="" name="barangay" class="form-select form-select-lg" required>
                             <option value="" hidden>Barangay</option>
-                            <option value="Pulo">Pulo</option>
+                        <?php
+                            $barangay = mysqli_query($conn, "SELECT * FROM barangay_tbl");
+                            while($row = mysqli_fetch_assoc($barangay)){
+                        ?>
+                            <option value="<?= $row['barangay_id'] ?>"><?= $row['barangay_name'] ?></option>
+                        <?php
+                            }
+                        ?>
                         </select>
                         <div class="invalid-feedback mb-1">
                           Require
@@ -106,14 +116,14 @@
                     </div>
                     <div class="col-12 mb-3">
                         <!-- Municipality -->
-                        <select name="purok" id="" name="municipality" class="form-select form-select-lg">
-                            <option value="San Isidro" hidden>San Isidro</option>
+                        <select name="municipality" id="" name="municipality" class="form-select form-select-lg">
+                            <option value="1" hidden>San Isidro</option>
                         </select>
                     </div>
                     <div class="col-12 mb-3">
                         <!-- Province -->
-                        <select name="purok" id="" name="province" class="form-select form-select-lg">
-                            <option value="Nueva Ecija" hidden>Nueva Ecija</option>
+                        <select name="province" id="" name="province" class="form-select form-select-lg">
+                            <option value="1" hidden>Nueva Ecija</option>
                         </select>
                     </div>
                   </div>
@@ -140,8 +150,8 @@
                         <!-- Gender -->
                         <select name="sex" id="" class="form-select form-select-lg" required>
                             <option value=""hidden>Sex(Kasarian)</option>
-                            <option value="">Male(Lalaki)</option>
-                            <option value="">Female(Babae)</option>
+                            <option value="Male">Male(Lalaki)</option>
+                            <option value="Female">Female(Babae)</option>
                         </select>
                         <label for="" class="invalid-feedback mb-1">Require</label>
                     </div>
@@ -154,9 +164,14 @@
                         <!-- BloodType -->
                         <select name="blood_type" id="" class="form-select form-select-lg" required>
                             <option value="" hidden>Blood Type</option>
-                            <option value="">A</option>
-                            <option value="">B</option>
-                            <option value="">O</option>
+                        <?php
+                            $blood_sql = mysqli_query($conn, "SELECT * FROM blood_tbl");
+                            while($row = mysqli_fetch_assoc($blood_sql)){
+                        ?>
+                            <option value="<?= $row['blood_type'] ?>"><?= $row['blood_type'] ?></option>
+                        <?php
+                            }
+                        ?>
                         </select>
                         <label for="" class="invalid-feedback mb-1">Require</label>
                     </div>
