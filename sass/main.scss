@@ -1,0 +1,96 @@
+// $white: #ffffff;
+
+// Still not sure about this one tho
+// $theme-colors: (
+//     "light":      #e1e6ed,
+//     "dark":       #0f1156,
+//     "primary":    #132f75,
+//     "secondary":  #1b4dd4,
+//     "info":       #dd4f9b,
+//     "success":    #0f9758,
+//     "warning":    #dec811,
+//     "danger":     #eb1b06,
+// );
+
+// This one has potential
+// $white: #ffffff;
+// $primary:       #312b14;
+// $secondary:     #857101;
+// $success:       #42a701;
+// $info:          #edc6b4;
+// $warning:       #ffc134;
+// $danger:        #f30059;
+// $light:         #9ed0e6;
+// $dark:          #0f1630;
+
+// $theme-colors: (
+//     "light":      #9ed0e6,
+//     "dark":       #0f1630,
+//     "primary":    #312b14,
+//     "secondary":  #857101,
+//     "info":       #edc6b4,
+//     "success":    #42a701,
+//     "warning":    #ffc134,
+//     "danger":     #f30059,
+// );
+
+// This looks bright i like this
+$white: #ffffff;
+$primary:       #4c30bc;
+$secondary:     #ff295c;
+$success:       #009759;
+$info:          #373e53;
+$warning:       #ddc800;
+$danger:        #e92000;
+$light:         #c3ebff;
+$dark:          #010007;
+
+$theme-colors: (
+    "light":      #c3ebff,
+    "dark":       #010007,
+    "primary":    #4c30bc,
+    "secondary":  #ff295c,
+    "info":       #373e53,
+    "success":    #009759,
+    "warning":    #ddc800,
+    "danger":     #e92000,
+);
+
+// $white: #ffffff;
+// $primary:       #29e379;
+// $secondary:     #3e58b8;
+// $success:       #10b828;
+// $info:          #e82e8a;
+// $warning:       #fbc80f;
+// $danger:        #fa064a;
+// $light:         #daeef7;
+// $dark:          #2f96d6;
+// $theme-colors: (
+//     "light":      #daeef7,
+//     "dark":       #2f96d6,
+//     "primary":    #29e379,
+//     "secondary":  #3e58b8,
+//     "info":       #e82e8a,
+//     "success":    #10b828,
+//     "warning":    #fbc80f,
+//     "danger":     #fa064a,
+// );
+
+@import "../node_modules/bootstrap/scss/_functions";
+@import "../node_modules/bootstrap/scss/_variables";
+
+$custom-theme-colors:(
+    "text": #0b0509,
+    "background": #ffffff,
+    "mainCol": #6fbe87,
+    "nextCol": #e7cadf,
+    "accent": #479e61,
+    "success": #10b828,
+    "warning": #fbc80f,
+    "danger":#fa064a
+);
+
+$theme-colors: map-merge($custom-theme-colors, $theme-colors);
+
+// Import
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
