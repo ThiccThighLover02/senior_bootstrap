@@ -31,7 +31,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="admin_create_post.php" method="post">
+              <form action="admin_add_post.php" method="post" enctype="multipart/form-data">
               <div class="form-group d-flex flex-column">
                     <!-- Event Description -->
                     <h4>Event Description:</h4>
@@ -80,8 +80,12 @@
                         ?>
                         </select>
                     </div>
+                    <h4>Image:</h4>
+                    <div class="col-12 mb-3">
+                      <input type="file" name="post-pic" class="form-control form-control-lg">
+                    </div>
                     <div class="col-12 mb-3 d-grid">
-                      <button type="submit" class="btn btn-primary">Save changes</button>
+                      <button type="submit" class="btn btn-primary">Create Post</button>
                     </div>
                   </div>
               </form>
@@ -110,11 +114,11 @@
             </div>
             <!-- Create post ends here -->
             <?php
-              $post_sql = mysqli_query($conn, "SELECT * FROM activity_tbl A LEFT JOIN admin_tbl Ad ON A.post_admin_id=Ad.admin_id LEFT JOIN emp_tbl E ON A.post_emp_id=E.emp_id ORDER BY post_date DESC, post_time DESC");
+              $post_sql = mysqli_query($conn, "SELECT * FROM activity_tbl A LEFT JOIN admin_tbl Ad ON A.post_admin_id=Ad.admin_id LEFT JOIN emp_tbl E ON A.post_emp_id=E.emp_id ORDER BY date_created DESC, time_created DESC");
               
               while($row = mysqli_fetch_assoc($post_sql)){
-                $date_create = new DateTime($row['post_date']);
-                $time_create = new DateTime($row['post_time']);
+                $date_create = new DateTime($row['date_created']);
+                $time_create = new DateTime($row['time_created']);
                 $post_pic = "";
             ?>
             <div class="row mb-5">
