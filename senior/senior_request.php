@@ -85,24 +85,30 @@
    $id_error = $_FILES['id_pic']['error'];
 
    if($id_error === 0){
+    # the file size is greater than that number
     if ($id_size > 16777215){
-    header("Location: create_acc.php?img_size=false"); #this will execute if the file ist too large
+    header("Location: create_acc.php?img_size=false"); #this will execute if the file is too large
     }
 
     else {
+        #we get the file and the file extension
         $img_ex = pathinfo($id_name, PATHINFO_EXTENSION);
         $img_ex_lc = strtolower($img_ex);
 
         $allowed_exs = array("jpg", "jpeg", "png");
-
+        #if the file is an image file
         if(in_array($img_ex_lc, $allowed_exs)) {
           date_default_timezone_set("Asia/Manila");
+          #rename the image
           $new_id_name =$firstN . "_" . $midN . "_" . $lastN . "id_pic" . "." . $img_ex_lc;
+          #this is where the image will be moved
           $img_upload_path = '../user/requests/id_pics/' . $new_id_name;
+          #this is the function that moves the uploaded file
           move_uploaded_file($id_tmp_name, $img_upload_path);
             
             
         }
+        #if not
         else{
          header("Location: create_acc.php?img_ex=false"); #this will execute if the file is not a jpeg or png
         }

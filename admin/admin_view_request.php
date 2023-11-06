@@ -77,7 +77,7 @@
     ?>
     <div class="container-fluid">
       <!-- First Row Starts Here   -->
-      <div class="row g-5 pt-3 order-sm-1" id="navbarSupportedContent" style="">
+      <div class="row gy-3 pt-3 order-sm-1" id="navbarSupportedContent" style="">
         <?php
           // this active variable shows the active tab in the side bar
           $active = "actRequest";
@@ -108,33 +108,33 @@
           </div>
           <!-- birthdate and age -->
           <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
             <h2 class="text-primary">Birthdate:</h3>
                 <p class="fs-5"><?= $birth_date->format("M d, Y") ?></p>
             </div>
-            <div class="col-lg-6 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
                 <h2 class="text-primary">Age:</h3>
                 <p class="fs-5"><?= $row['age'] ?></p>
             </div>
           </div>
           <!-- address and contact no   -->
           <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
                 <h2 class="text-primary">Address:</h3>
                 <p class="fs-5"><?= $row['purok_no'] . ", " . $row['barangay_name'] . ", " . $row['municipality_name'] . ", " . $row['province_name'] ?></p>
             </div>
-            <div class="col-lg-6 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
                 <h2 class="text-primary">Contact No:</h3>
                 <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
                 <h2 class="text-primary">Gender:</h3>
                 <p class="fs-5"><?= $row['sex'] ?></p>
             </div>
-            <div class="col-lg-6 d-flex flex-column">
+            <div class="col-md-6 d-flex flex-column">
                 <h2 class="text-primary">Civil Status:</h3>
                 <p class="fs-5"><?= $row['civil_status'] ?></p>
             </div>
@@ -146,11 +146,11 @@
                     <buttons class="btn btn-block btn-info" data-bs-toggle="modal" data-bs-target="#attach-modal">View Attachments <i class="fa-solid fa-paperclip"></i></buttons>
                 </div>
                 <div class="col-6 d-grid">
-                <buttons type="button" class="btn btn-success text-white" id="deleteBtn">Accept Request <i class="fa-solid fa-check"></i></buttons>
+                <a href="admin_add_senior.php?request_id=<?= $row['request_id'] ?>" class="btn btn-success text-white" id="deleteBtn">Accept Request <i class="fa-solid fa-check"></i></a>
                 </div>
 
                 <div class="col-6 d-grid">
-                <buttons type="button" class="btn btn-danger text-white" id="deleteBtn">Reject Request <i class="fa-solid fa-trash"></i></buttons>
+                <a href="admin_reject_request.php?request_id=<?= $row['request_id'] ?>" class="btn btn-danger text-white" id="deleteBtn">Reject Request <i class="fa-solid fa-trash"></i></a>
                 </div>
             </div>
             

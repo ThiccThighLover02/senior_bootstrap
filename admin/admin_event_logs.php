@@ -35,7 +35,7 @@
 
         <!-- Event Logs Starts Here -->
         <div class="col-lg-8 bg-white table-responsive rounded overflow-auto">
-          <ul class="nav nav-tabs">
+          <ul class="nav nav-tabs nav-justified">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Admin</button>
             </li>

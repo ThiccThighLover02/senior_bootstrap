@@ -99,7 +99,7 @@
 
           $sql_rows = mysqli_num_rows($online);
         ?>
-        <div class="col-lg-6 table-responsive rounded mb-2">
+        <div class="col-lg-6 rounded mb-2 overflow-y-scroll" style="height: 85vh">
           <div class="container-fluid">
             <!-- Create post starts here -->
             <div class="row mb-4">

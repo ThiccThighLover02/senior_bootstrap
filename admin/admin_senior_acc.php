@@ -24,7 +24,7 @@
     ?>
     <div class="container-fluid">
       <!-- First Row Starts Here   -->
-      <div class="row g-5 pt-3 order-sm-1" id="navbarSupportedContent" style="">
+      <div class="row gy-3 pt-3 order-sm-1" id="navbarSupportedContent" style="">
         <?php
           // this active variable shows the active tab in the side bar
           $active = "actSenior";
@@ -38,7 +38,7 @@
           $birth_date = new DateTime($row['date_birth']);
         ?>
 
-        <div class="col-lg-6 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-auto">
+        <div class="col-lg-6 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-y-scroll" style="height: 85vh">
           <a href="admin_view_seniors.php"><i class="fa-solid fa-arrow-left fa-2xl float-start text-primary"></i></a>  
           <div class="row d-flex justify-content-center">
             <div class="col-5 border border-dark">
@@ -92,41 +92,6 @@
         </div>
       </div>
       <!-- first row ends here -->
-      <div class="row mt-5 d-flex justify-content-center">
-        <div class="col-lg-6 bg-white">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary"></h3>
-                <p class="fs-5">Male</p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5">Single</p>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5">Male</p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5">Single</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5">Male</p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5">Single</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </body>
   <script>

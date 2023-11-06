@@ -52,13 +52,7 @@
           contentHeight: "auto",
           fixedWeekCount: false,
           themeSystem: 'bootstrap5',
-          events: [
-            {
-                title: "Practice Event bootstrap",
-                start: "2023-11-04",
-                end: "2023-11-10"
-            }
-          ]
+          events: 'calendar_events.php'
         });
         calendar.render();
       });
