@@ -13,8 +13,8 @@
 //    Address
    $purok = $_POST['purok'];
    $barangay = $_POST['barangay'];
-   $municipality = "San Isidro";
-   $province = "Nueva Ecija";
+   $municipality = $_POST['municipality'];
+   $province = $_POST['province'];
 //    Birth Information
    $birth_date = $_POST['birth_date'];
    $birth_place = $_POST['birth_place'];

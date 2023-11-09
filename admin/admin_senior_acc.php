@@ -87,7 +87,7 @@
           </div>
         </div>
         <div class="col-lg-3 col-sm-12 order-1 order-xl-2 order-sm-1 d-flex flex-column gap-3">
-            <buttons class="btn btn-block btn-info" onclick="printExternal('../id_layout.php?id=2')">Print ID <i class="fa-solid fa-print"></i></buttons>
+            <buttons class="btn btn-block btn-info" onclick="printExternal('../id_layout.php?id=<?= $senior_id ?>')">Print ID <i class="fa-solid fa-print"></i></buttons>
             <buttons type="button" class="btn btn-danger text-white" id="deleteBtn">Delete Senior <i class="fa-solid fa-trash"></i></buttons>
         </div>
       </div>

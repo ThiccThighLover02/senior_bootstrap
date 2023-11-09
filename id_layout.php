@@ -25,11 +25,6 @@
             $result = $sql->get_result();
 
             $row = mysqli_fetch_assoc($result);
-            
-
-            $birthday = new DateTime($row['date_birth']);
-            $interval = $birthday->diff(new DateTime);
-            $age = $interval->y;
         ?>
 
 <div class="id-layout">
@@ -65,12 +60,6 @@
                     <p><?= $row['date_birth'] ?></p>
                     <hr class="line">
                     <p>Birthdate</p>
-                </div>
-
-                <div class="age">
-                    <p><?php echo $age; ?></p>
-                    <hr class="line">
-                    <p>Age</p>
                 </div>
 
                 <div class="id-no">

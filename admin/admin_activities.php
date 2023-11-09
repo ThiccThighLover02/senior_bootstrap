@@ -18,6 +18,21 @@
     <title>Senior System</title>
 </head>
   <body class="bg-light overflow-hidden">
+    <!-- Modal -->
+    <div class="modal fade" id="view-edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body edit-modal">
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
     <?php
       include 'admin_navbar.php';
     ?>
@@ -46,13 +61,33 @@
   <script>
     
     document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function(){
+          $("#scanBtn").on("click", function(){
+            console.log("You pressed the scan btn");
+          })
+        });
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           contentHeight: "auto",
           fixedWeekCount: false,
           themeSystem: 'bootstrap5',
-          events: 'calendar_events.php'
+          events: 'calendar_events.php',
+          eventClick: function(info){
+            $.ajax({
+                method: "POST",
+                url: "modal_event.php",
+                data: {
+                    "product_id": info.event.id
+                },
+                success: function(response){
+                    $(".edit-modal").html(response);
+                    $("#view-edit-modal").modal('show');
+                    console.log(response);
+                }
+
+            })
+          }
         });
         calendar.render();
       });

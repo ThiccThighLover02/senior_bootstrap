@@ -55,6 +55,13 @@
     </div>
 </body>
 <script>
+    <?php
+      if(isset($_GET['request']) == 'sent'){
+    ?>
+      alert("Your request has been sent, you will be notified via email if your request has been approved or not");
+    <?php
+      }
+    ?>
     function show_pass() {
       var x = document.getElementById("pass_word");
       if (x.type === "password") {

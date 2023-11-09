@@ -25,22 +25,22 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
 
               <div class="dropdown">
                 <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown button
+                  Login
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" href="senior/senior_login.php">Senior Login</a></li>
-                  <li><a class="dropdown-item" href="user/user_login.php">Employee Login</a></li>
+                  <li><a class="dropdown-item" href="user/emp_login.php">Employee Login</a></li>
                   <li><a class="dropdown-item" href="admin/admin_login.php">Admin Login</a></li>
                 </ul>
               </div>
 
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">FAQ U<span class="sr-only">(current)</span></a>
             </li>
             </ul>
           </div>

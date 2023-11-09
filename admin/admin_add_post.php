@@ -9,9 +9,12 @@
             #we will declare all of the variables that we will receive using the post method
             $post_desc = $_POST['description'];
             $post_date = $_POST['act_date'];
-            $time_start = $_POST['time_start'];
-            $time_end = $_POST['time_end'];
+            $time_start = new DateTime($post_date . " " . $_POST['time_start']);
+            $start_iso = $time_start->format(DateTime::ATOM);
+            $time_end =  new DateTime($post_date . " " . $_POST['time_end']);
+            $end_iso = $time_end->format(DateTime::ATOM);
             $post_loc = $_POST['event_location'];
+            $post_title = $_POST['post_title'];
             $event_type_id = $_POST['event_type'];
             $date_created = date("Y-m-d");
             $time_created = date("H:i:s");
@@ -45,8 +48,8 @@
              }
 
              if(isset($_SESSION['admin_status'])){
-                $post_stmt = $conn->prepare("INSERT INTO `activity_tbl`(`post_admin_id`, `event_type_id`, `post_description`, `post_pic`, `post_date`, `date_created`, `time_created`, `post_loc`, `time_start`, `time_end`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $post_stmt->bind_param("iissssssss", $_SESSION['admin_id'], $event_type_id, $post_desc, $new_post_name, $post_date, $date_created, $time_created, $post_loc, $time_start, $time_end);
+                $post_stmt = $conn->prepare("INSERT INTO `activity_tbl`(`post_admin_id`, `event_type_id`, `post_title`, `post_description`, `post_pic`, `post_date`, `date_created`, `time_created`, `post_loc`, `time_start`, `time_end`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $post_stmt->bind_param("iisssssssss", $_SESSION['admin_id'], $event_type_id, $post_title, $post_desc, $new_post_name, $post_date, $date_created, $time_created, $post_loc, $start_iso, $end_iso);
                 $post_stmt->execute();
                 header("Location: admin_home.php");
 

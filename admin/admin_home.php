@@ -33,6 +33,11 @@
             <div class="modal-body">
               <form action="admin_add_post.php" method="post" enctype="multipart/form-data">
               <div class="form-group d-flex flex-column">
+                    <h4>Post Title</h4>
+                    <div class="col-12 mb-3">
+                        <!-- Date of Event -->
+                        <input type="text" class="form-control form-control-lg" id="" name="post_title" placeholder="Post Title" required>
+                    </div>
                     <!-- Event Description -->
                     <h4>Event Description:</h4>
                     <div class="col-12 mb-3">
@@ -221,6 +226,6 @@
     }
     // If there are no sessions you will be redirected back to the landing page
     else {
-        header("Location: index.php");
+        header("Location: ../index.php");
     }
 ?>
