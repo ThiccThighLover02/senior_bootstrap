@@ -36,14 +36,14 @@
 
           $row = mysqli_fetch_assoc($result);
           $birth_date = new DateTime($row['date_birth']);
+          $acc_created = new DateTime($row['account_date'] . $row['account_time']);
         ?>
 
-        <div class="col-lg-6 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-y-scroll" style="height: 85vh">
-          <a href="admin_view_seniors.php"><i class="fa-solid fa-arrow-left fa-2xl float-start text-primary"></i></a>  
+        <div class="col-lg-8 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-y-scroll" style="height: 83vh">
           <div class="row d-flex justify-content-center">
-            <div class="col-5 border border-dark">
+            <div style="height: 30vh; width: 30vh;">
               <div class="ratio ratio-1x1">
-                <img class="img-fluid" src="../senior/senior_pics/id_pics/<?= $row['id_pic'] ?>" alt="">
+                <img class="img-fluid border border-black" src="../senior/senior_pics/id_pics/<?= $row['id_pic'] ?>" alt="">
               </div>
             </div>
           </div>
@@ -52,43 +52,139 @@
                 <h1 class="text-center"><?= $row['full_name'] ?></h1>
             </div>
           </div>
-          <!-- birthdate and age -->
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-            <h2 class="text-primary">Birthdate:</h3>
-                <p class="fs-5"><?= $birth_date->format("M d, Y") ?></p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Age:</h3>
-                <p class="fs-5"><?= $row['age'] ?></p>
-            </div>
-          </div>
-          <!-- address and contact no   -->
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Address:</h3>
-                <p class="fs-5"><?= $row['purok_no'] . ", " . $row['barangay_name'] . ", " . $row['municipality_name'] . ", " . $row['province_name'] ?></p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Contact No:</h3>
-                <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5"><?= $row['sex'] ?></p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">General Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="account-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Account Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="health-tab" data-bs-toggle="tab" data-bs-target="#health" type="button" role="tab" aria-controls="contact" aria-selected="false">Health Info</button>
+            </li>
+            
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <!-- address and birthdate   -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Address:</h3>
+                    <p class="fs-5"><?= $row['purok_no'] . ", " . $row['barangay_name'] . ", " . $row['municipality_name'] . ", " . $row['province_name'] ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                <h2 class="text-primary">Birthdate:</h3>
+                    <p class="fs-5"><?= $birth_date->format("M d, Y") ?></p>
+                </div>
+              </div>
+              <!-- birthplace and ses -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                  <h2 class="text-primary">Birth Place:</h3>
+                  <p class="fs-5"><?= $row['birth_place'] ?></p>
+                </div>
+                
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Gender:</h3>
+                    <p class="fs-5"><?= $row['sex'] ?></p>
+                </div>
+              </div>
+
+              <!-- Citizenship and age -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Citizenship:</h3>
+                    <p class="fs-5"><?= $row['citizenship'] ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Age:</h3>
+                    <p class="fs-5"><?= $row['age'] ?></p>
+                </div>
+              </div>
+
+              <!-- Education and religion -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Education:</h3>
+                    <p class="fs-5"><?= $row['education'] ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Religion:</h3>
+                    <p class="fs-5"><?= $row['religion'] ?></p>
+                </div>
+              </div>
+
+              <!-- Education and religion -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Civil Status:</h3>
+                    <p class="fs-5"><?= $row['civil_status'] ?></p>
+                </div>
+              </div>
             </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5"><?= $row['civil_status'] ?></p>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <!-- address and birthdate   -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Password:</h3>
+                    <input type="password" class="form-control" placholder="" value="<?= $row['senior_password'] ?>">
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                <h2 class="text-primary">Account Created:</h3>
+                    <p class="fs-5"><?= $acc_created->format("M d, Y H:ia") ?></p>
+                </div>
+              </div>
             </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <!-- address and birthdate   -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Contact Number:</h3>
+                    <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Guardian's Number:</h3>
+                    <p class="fs-5"><?= str_pad($row['emergency_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Email Address:</h3>
+                    <p class="fs-5"><?= $row['senior_email'] ?></p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Blood Type:</h3>
+                    <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Physical Disability:</h3>
+                    <p class="fs-5"><?= str_pad($row['emergency_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Health Conditions:</h3>
+                    <p class="fs-5"><?= $row['senior_email'] ?></p>
+                </div>
+              </div>
+            </div>
+
           </div>
+          
         </div>
-        <div class="col-lg-3 col-sm-12 order-1 order-xl-2 order-sm-1 d-flex flex-column gap-3">
-            <buttons class="btn btn-block btn-info" onclick="printExternal('../id_layout.php?id=<?= $senior_id ?>')">Print ID <i class="fa-solid fa-print"></i></buttons>
-            <buttons type="button" class="btn btn-danger text-white" id="deleteBtn">Delete Senior <i class="fa-solid fa-trash"></i></buttons>
+        <div class="col-lg-2 col-sm-12 order-1 order-xl-2 order-sm-1 d-flex flex-column gap-3">
+            <buttons class="btn btn-block btn-info" onclick="printExternal('../id_layout.php?id=<?= $senior_id ?>')"><i class="fa-solid fa-print"></i> Print ID</buttons>
+            <buttons class="btn btn-block btn-info" onclick="printExternal('../senior_document.php?id=<?= $senior_id ?>')"><i class="fa-solid fa-print"></i> Senior Information</buttons>
+            <a href="admin_view_seniors.php" class="btn btn-primary text-white"><i class="fa-solid fa-arrow-left"></i> Return to seniors</a>
+            <buttons type="button" class="btn btn-danger text-white" id="deleteBtn"><i class="fa-solid fa-trash"></i> Remove Senior</buttons>
         </div>
       </div>
       <!-- first row ends here -->
@@ -98,7 +194,7 @@
     $(document).ready(function(){
       //this is for the delete senior button
       $("#deleteBtn").on("click", function(){
-        if(confirm("Do you want to delete this account?") == true){
+        if(confirm("Do you want to remove this account?") == true){
           window.location.href = "admin_delete_senior.php?id=<?= $senior_id ?>";
         }
       });
@@ -106,12 +202,20 @@
     });
     // This is for the printing ID function
     function printExternal(url) {
-    var printWindow = window.open( url, 'Print', 'left=200, top=200, width=1600, height=900, toolbar=800, resizable=0');
-    printWindow.addEventListener('load', function(){
-        printWindow.print();
-        printWindow.close();
-    }, true);
-  }
+    var printWindow = window.open(url, 'Print', 'left=200, top=200, width=1600, height=900, toolbar=800, resizable=0');
+
+    if (printWindow) {
+        printWindow.addEventListener('load', function () {
+            setTimeout(function () {
+                printWindow.print();
+                printWindow.close();
+            }, 500); // Adjust the delay as needed
+        });
+    } else {
+        console.error('Failed to open the print window.');
+    }
+}
+
     
   </script>
 </html>

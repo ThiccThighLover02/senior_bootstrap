@@ -162,7 +162,7 @@
           {
             text: '<i class="fa-solid fa-file-excel"></i>Download Excel',
             extend: 'excel', 
-            className: 'btn text-white btn-block rounded'
+            className: 'btn btn-info text-white btn-block rounded'
           },
         {
           extend: "spacer"
@@ -174,7 +174,7 @@
           {
             text: '<i class="fa-solid fa-file-csv"></i>Download CSV',
             extend: 'csv', 
-            className: 'btn text-white btn-block rounded'
+            className: 'btn btn-info text-white btn-block rounded'
           }
         ]
       } );  

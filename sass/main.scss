@@ -35,26 +35,50 @@
 // );
 
 // This looks bright i like this
+// $white: #ffffff;
+// $primary:       #4c30bc;
+// $secondary:     #ff295c;
+// $success:       #009759;
+// $info:          #373e53;
+// $warning:       #ddc800;
+// $danger:        #e92000;
+// $light:         #c3ebff;
+// $dark:          #010007;
+
+// $theme-colors: (
+//     "light":      #c3ebff,
+//     "dark":       #010007,
+//     "primary":    #4c30bc,
+//     "secondary":  #ff295c,
+//     "info":       #373e53,
+//     "success":    #009759,
+//     "warning":    #ddc800,
+//     "danger":     #e92000,
+// );
+
 $white: #ffffff;
-$primary:       #4c30bc;
-$secondary:     #ff295c;
-$success:       #009759;
-$info:          #373e53;
-$warning:       #ddc800;
-$danger:        #e92000;
-$light:         #c3ebff;
-$dark:          #010007;
+$primary:       #01ad01;
+$secondary:     #ffff01;
+$success:       #00b70b;
+$info:          #4a0404;
+$warning:       #fdc700;
+$danger:        #fa004c;
+$light:         #f4e5dd;
+$dark:          #110b04;
 
 $theme-colors: (
-    "light":      #c3ebff,
-    "dark":       #010007,
-    "primary":    #4c30bc,
-    "secondary":  #ff295c,
-    "info":       #373e53,
-    "success":    #009759,
-    "warning":    #ddc800,
-    "danger":     #e92000,
+    "light":      #f4e5dd,
+    "dark":       #110b04,
+    "primary":    #01ad01,
+    "secondary":  #ffff01,
+    "info":       #4a0404,
+    "success":    #00b70b,
+    "warning":    #fdc700,
+    "danger":     #fa004c,
 );
+
+$zindex-offcanvas-backdrop: 1045;
+$zindex-offcanvas: 1051;
 
 // $white: #ffffff;
 // $primary:       #29e379;

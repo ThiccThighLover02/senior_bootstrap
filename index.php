@@ -1,68 +1,141 @@
-<!doctype html>
+<?php
+  include 'db_connect.php';
+  $post_sql = mysqli_query($conn, "SELECT * FROM activity_tbl A LEFT JOIN admin_tbl Ad ON A.post_admin_id=Ad.admin_id  ORDER BY date_created DESC, time_created DESC");
+
+?>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php
+    include 'links.php';
+  ?>
+  <style>
+    body{
+      background-image: url("munisipyobckgrnd.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
 
-    <!-- Bootstrap CSS -->
-    <?php
-        include 'links.php';
-    ?>
+    .logo {
+      width: 4vw;
+    }
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-        
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-        <a class="navbar-brand" href="#">Senior Citizen System</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    .nav-drop {
+      background-color: transparent;
+      border: none;
+      width: fit-content;
+    }
+
+    .nav-header{  
+      background: linear-gradient(269deg, #FFFC00 -3.68%, rgba(255, 255, 255, 0.00) 118.38%);
+    }
+
+    .next-nav{
+      background: linear-gradient(180deg, #00AD03 0%, rgba(0, 173, 3, 0.23) 171.71%, rgba(0, 173, 3, 0.00) 717.49%);
+    }
+
+    .next-nav-contain {
+      width: 100%;
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <?php
+    include 'landing-navbar.php';
+  ?>
+
+  <div class="container-fluid ps-5 pe-5 pt-3">
+    <div class="row">
+      <div class="col-lg-6 col-12 overflow-y-scroll rounded-top rounded-3" style="height: 75vh">
+        <div class="row bg-primary">
+          <h3 class="text-center text-white">Senior Activities</h3>
         </div>
+      <?php
+        $post_sql = mysqli_query($conn, "SELECT * FROM activity_tbl A LEFT JOIN admin_tbl Ad ON A.post_admin_id=Ad.admin_id LEFT JOIN emp_tbl E ON A.post_emp_id=E.emp_id ORDER BY date_created DESC, time_created DESC");
         
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-
-              <div class="dropdown">
-                <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  Login
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="senior/senior_login.php">Senior Login</a></li>
-                  <li><a class="dropdown-item" href="user/emp_login.php">Employee Login</a></li>
-                  <li><a class="dropdown-item" href="admin/admin_login.php">Admin Login</a></li>
-                </ul>
+        while($row = mysqli_fetch_assoc($post_sql)){
+          $date_create = new DateTime($row['date_created']);
+          $time_create = new DateTime($row['time_created']);
+          $post_pic = "";
+      ?>
+        <div class="row mb-3">
+          <div class="col-lg-12 shadow bg-white rounded">
+            <!-- Post header -->
+            <div class="row">
+              <div class="col-6 p-2">
+                <div class="row d-flex">
+                <?php
+                  if(!is_null($row['post_admin_id'])){
+                    $post_pic = "admin/admin_pic/admin_pic.jpg";
+                    $post_name = "Admin";
+                  }
+                  elseif(!is_null($row['post_emp_id'])){
+                    $post_pic = "user/user_pics/" . $row['id_pic'];
+                    $post_name = $row['full_name'];
+                  }
+                ?>
+                  <div class="col-3">
+                    <img class="img-fluid rounded-circle" src="<?= $post_pic ?>" alt="" style="width: 7vw">
+                  </div>
+                  <div class="col-9">
+                    <div class="row">
+                      <div class="col-12">
+                        <h4><?= $post_name ?></h4>
+                      </div>
+                      <div class="col-12">
+                        <p class="fs-5"><?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#">FAQ U<span class="sr-only">(current)</span></a>
-            </li>
-            </ul>
+              <div class="col-lg-6">
+                <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4"></i>
+              </div>
+            </div>
+            <!-- Post header ends here -->
+            <!-- Post Description -->
+            <div class="row">
+              <div class="col-12">
+                <p><?= $row['post_description'] ?></p>
+              </div>
+            </div>
+            <!-- Post image -->
+            <div class="row">
+              <img class="img-fluid mb-3" src="user/post_pics/<?= $row['post_pic'] ?>" alt="">
+            </div>
           </div>
-          </nav>
+        </div>
+        <?php
+        }
+        ?>
+      </div>
 
-    <div class="container-xxlg d-flex flex-column align-items-center justify-content-center bg-primary" style="height: 100vh;">
+      <div class="col-lg-6 col-12">
+        <div class="bg-white p-2 rounded-2" id="calendar">
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        </div>
+      </div>
+    </div>
+    <!-- <div id="carouselExampleIndicators" class="carousel slide slideshow" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
-      <div class="carousel-inner">
+      <div class="carousel-inner d-flex align-items-center">
         <div class="carousel-item active">
-          <img src="https://picsum.photos/900/400" class="d-block" alt="...">
+          <img src="pictures/senior_image.jpg" class="d-block h-100 w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="https://picsum.photos/900/400" class="d-block" alt="...">
+          <img src="pictures/senior_image.png" class="d-block h-100 w-100" alt="...">
         </div>
         <div class="carousel-item">
-          <img src="https://picsum.photos/900/400" class="d-block" alt="...">
+          <img src="..." class="d-block w-100" alt="...">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -73,57 +146,42 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
-    </div>
+    </div> -->
+  </div>
 
+</body>
 
-        <h1 class="text-white">Slideshow and some texts goes here</h1>
-        
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+        $(document).ready(function(){
+          $("#scanBtn").on("click", function(){
+            console.log("You pressed the scan btn");
+          })
+        });
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          contentHeight: "auto",
+          fixedWeekCount: false,
+          themeSystem: 'bootstrap5',
+          events: 'calendar_events.php',
+          eventClick: function(info){
+            $.ajax({
+                method: "POST",
+                url: "modal_event.php",
+                data: {
+                    "product_id": info.event.id
+                },
+                success: function(response){
+                    $(".edit-modal").html(response);
+                    $("#view-edit-modal").modal('show');
+                    console.log(response);
+                }
 
-    </div>
-
-    <!-- the benefits starts here -->
-
-    <div class="container d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
-        <div class="row">
-            <div class="col-12 text-align-center">
-                <h1>Benefits goes here</h1>
-            </div>
-        </div>
-        
-
-        <div class="row">
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" src="https://picsum.photos/318/100" alt="Card image cap">
-                    <div class="card-body text-align-center">
-                        Fast: <br> With the help of the senior system you are able to see the events and attend these events with ease.
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" src="https://picsum.photos/318/100" alt="Card image cap">
-                    <div class="card-body text-align-center"> Reliable: <br> The senior citizen system will help make the process of claiming benefits and attending events easier. </div>
-                </div>
-            </div>
-
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" src="https://picsum.photos/318/100" alt="Card image cap">
-                    <div class="card-body text-align-center"> What the fuck do I put here </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   <!-- the benefits ends here -->
-
-    <div class="container d-flex flex-column align-items-center justify-content-center mb-5">
-      <h1>Want to sign up?</h1>
-      <a href="senior/senior_create_acc.php" class="btn btn-outline-primary">Click Here</a>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  </body>
+            })
+          }
+        });
+        calendar.render();
+      });
+</script>
 </html>

@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
         include "senior_links.php";
+        include "nav_style.php";
     ?>
     <title>Document</title>
 </head>
 <body class="bruh" style="background-image: url('../munisipyobckgrnd.jpg'); background-size: cover;">
+<?php
+  include 'senior_navbar.php';
+?>
     <div class="container bg-white mt-3 p-5 rounded" style="width: 50vw;">
-        <div class="row">
-            <div class="col">
-                <a href="../index.php"><i class="fa-solid fa-arrow-left fa-2xl"></i></a>
-            </div>
-        </div>
         <div class="row">
             <div class="col-12 d-flex justify-content-center">
                 <img src="../munisipyo.png" alt="" class="image-responsive" style="width: 10vw;">
@@ -31,11 +30,11 @@
                 <form action="senior_check.php" method="post" class="d-flex flex-column gap-2">
                   <div class="form-group">
                     <label for="formGroupExampleInput">Email Address</label>
-                    <input type="text" class="form-control form-control-lg" id="formGroupExampleInput" placeholder="Email Address">
+                    <input type="text" name="email" class="form-control form-control-lg" id="formGroupExampleInput" placeholder="Email Address">
                   </div>
                   <div class="form-group">
                     <label for="formGroupExampleInput2">Password</label>
-                    <input type="password" id="pass_word" class="form-control form-control-lg" id="formGroupExampleInput2" placeholder="Password">
+                    <input type="password" name="password" id="pass_word" class="form-control form-control-lg" id="formGroupExampleInput2" placeholder="Password">
                   </div>
 
                   <div class="form-check">

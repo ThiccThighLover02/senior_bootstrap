@@ -1,12 +1,13 @@
 <!-- This is the offcanvas container -->
-<div class="col-lg-3 sticky-top">
+<?php
+          include "nav_style.php";
+
+?>
+<div class="col-lg-2 sticky-top">
     <div class="offcanvas-lg offcanvas-start"  id="sideDiv">
         <ul class="nav nav-pills flex-column gap-3 side_menu_left">
           <li class="nav-item">
             <a class="nav-link <?= $active === "actHome" ? "active":""; ?> fs-5" aria-current="page" href="admin_home.php"><i class="fa-solid fa-home fa-lg"></i> Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link <?= $active === "actUser" ? "active":""; ?> fs-5" href="admin_view_users.php"><i class="fa-solid fa-user fa-lg"></i> Users</a>
           </li>
           <li class="nav-item">
             <a class="nav-link <?= $active === "actSenior" ? "active":""; ?> fs-5" href="admin_view_seniors.php"><i class="fa-solid fa-person-cane fa-lg"></i>  Seniors</a>
@@ -18,7 +19,7 @@
             <a class="nav-link <?= $active === "actEvent" ? "active":""; ?> fs-5" href="admin_event_logs.php"><i class="fa-solid fa-book fa-lg"></i> Event Logs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?= $active === "actActivities" ? "active":""; ?> fs-5" href="admin_activities.php"><i class="fa-solid fa-person-walking fa-lg"></i>   Activites</a>
+            <a class="nav-link <?= $active === "actActivities" ? "active":""; ?> fs-5" href="admin_activities.php"><i class="fa-solid fa-calendar fa-lg"></i>   Calendar</a>
           </li>
           <li class="nav-item">
             <a class="nav-link <?= $active === "actMessage" ? "active":""; ?> fs-5" href="admin_message.php"><i class="fa-solid fa-message fa-lg"></i>   Messages</a>

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
+        include "../db_connect.php";
         include "admin_links.php";
+        include "nav_style.php";
     ?>
     <title>Senior System</title>
 </head>
@@ -16,10 +18,14 @@
     </div>
 </div>
     <!-- Toast for age end -->
-<body class="overflow-hidden" style="background-image: url('../munisipyobckgrnd.jpg'); background-size: cover;">
+<body class="" style="background-image: url('../munisipyobckgrnd.jpg'); background-size: cover;">
+
+<?php
+    include "admin_navbar.php"
+?>
 
     <!-- container for header and form -->
-    <div class="container-sm bg-white mt-4 p-5 rounded-3 overflow-auto" style="">
+    <div class="container-sm bg-white mt-4 mb-4 p-5 rounded-3 overflow-auto" style="">
 
         <div class="row">
             <div class="col">
@@ -78,17 +84,19 @@
                     <h4>Permanent Address:</h4>
                     <div class="col-12 mb-3">
                         <!-- Purok -->
+                    
                         <select name="purok" id="" name="purok" class="form-select form-select-lg" required>
                             <option value="" hidden>Purok</option>
-                            <option value="#1">#1</option>
-                            <option value="#2">#2</option>
-                            <option value="#3">#3</option>
-                            <option value="#4">#4</option>
-                            <option value="#5">#5</option>
-                            <option value="#6">#6</option>
-                            <option value="#7">#7</option>
-                            <option value="#8">#8</option>
-                            <option value="#9">#9</option>
+                        <?php
+                            $purok_sql = mysqli_query($conn, "SELECT * FROM purok_tbl");
+                            while($row = mysqli_fetch_assoc($purok_sql)){
+                        ?>
+                            
+                            <option value="<?= $row['purok_id'] ?>"><?= $row['purok_no'] ?></option>
+                            
+                        <?php
+                        }
+                        ?>
                         </select>
                         <div class="invalid-feedback mb-1">
                           Require
@@ -98,7 +106,14 @@
                         <!-- Barangay -->
                         <select id="" name="barangay" class="form-select form-select-lg" required>
                             <option value="" hidden>Barangay</option>
-                            <option value="Pulo">Pulo</option>
+                        <?php
+                            $barangay_sql = mysqli_query($conn, "SELECT * FROM barangay_tbl");
+                            while($row = mysqli_fetch_assoc($barangay_sql)){
+                        ?>
+                            <option value="<?= $row['barangay_id'] ?>"><?= $row['barangay_name'] ?></option>
+                        <?php
+                            }
+                        ?>
                         </select>
                         <div class="invalid-feedback mb-1">
                           Require
@@ -107,13 +122,30 @@
                     <div class="col-12 mb-3">
                         <!-- Municipality -->
                         <select name="purok" id="" name="municipality" class="form-select form-select-lg">
-                            <option value="San Isidro" hidden>San Isidro</option>
+                            <option value="" hidden>Municipality</option>
+                        <?php
+                            $municipality_sql = mysqli_query($conn, "SELECT * FROM municipality_tbl");
+                            while($row = mysqli_fetch_assoc($municipality_sql)){
+                        ?>
+                            <option value="<?= $row['municipality_id'] ?>"><?= $row['municipality_name'] ?> </option>
+                        <?php
+                            }
+                        ?>
                         </select>
                     </div>
                     <div class="col-12 mb-3">
                         <!-- Province -->
-                        <select name="purok" id="" name="province" class="form-select form-select-lg">
-                            <option value="Nueva Ecija" hidden>Nueva Ecija</option>
+                        <select name="purok" id="" name="province" class="form-select form-select-lg">\
+                            <option value="" hidden>Province</option>
+                        <?php
+                            $province_sql = mysqli_query($conn, "SELECT * FROM province_tbl");
+                            while($row = mysqli_fetch_assoc($province_sql)){
+                        ?>
+                            <option value="<?= $row['province_id'] ?>"><?= $row['province_name']?></option>
+
+                        <?php
+                            }
+                        ?>
                         </select>
                     </div>
                   </div>
@@ -153,11 +185,16 @@
                     <div class="col-12 mb-3">
                         <!-- BloodType -->
                         <select name="blood_type" id="" class="form-select form-select-lg" required>
-                            <option value="" hidden>Blood Type</option>
-                            <option value="">A</option>
-                            <option value="">B</option>
-                            <option value="">O</option>
-                        </select>
+                                <option value="" hidden>Blood Type</option>
+                            <?php
+                                $blood_sql = mysqli_query($conn, "SELECT * FROM blood_tbl");
+                                while($row = mysqli_fetch_assoc($blood_sql)){
+                            ?>
+                                <option value="<?= $row['blood_id'] ?>"><?= $row['blood_type'] ?></option>
+                            <?php
+                                }
+                            ?>
+                            </select>
                         <label for="" class="invalid-feedback mb-1">Require</label>
                     </div>
                     <div class="col-12 mb-3">
@@ -236,7 +273,7 @@
                     </div>
                     <div class="col-12 mb-3">
                         <!-- Emergency Contact -->
-                        <input type="text" class="form-control form-control-lg" name="emergency_no" id="" placeholder="Emergency Contact" required>
+                        <input type="text" class="form-control form-control-lg" name="emergency_no" id="" placeholder="Guardian's Contact Number" required>
                         <label for="" class="invalid-feedback mb-1">Require</label>
                     </div>
                     
@@ -280,7 +317,7 @@
                     </div>
                   </div>
 
-                  <input type="submit" class="btn btn-primary btn-block" value="Submit Request">
+                  <input type="submit" class="btn btn-primary btn-block text-white" value="Add Senior">
 
                 </form>
                 

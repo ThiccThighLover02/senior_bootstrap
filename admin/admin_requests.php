@@ -53,7 +53,7 @@
                 <!-- display all the data in the row -->
                 <td class="text-center fs-5"><?= $row['request_id'] ?></td>
                 <td class="text-center fs-5"><?= $row['full_name'] ?> has sent a request</td>
-                <td class="d-flex justify-content-center"><a href="admin_view_request.php?id=<?= $row['request_id'] ?>" class="btn btn-primary">View Request</a></td>
+                <td class="d-flex justify-content-center"><a href="admin_view_request.php?id=<?= $row['request_id'] ?>" class="btn btn-primary text-white">View Request</a></td>
               </tr>
             <?php
               }

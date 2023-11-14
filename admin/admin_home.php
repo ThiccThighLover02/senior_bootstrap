@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
         include "admin_links.php";
+        include "nav_style.php";
     ?>
     <title>Senior System</title>
 </head>
@@ -38,6 +39,16 @@
                         <!-- Date of Event -->
                         <input type="text" class="form-control form-control-lg" id="" name="post_title" placeholder="Post Title" required>
                     </div>
+                    <!-- Post Type -->
+                    <h4>Post Type</h4>
+                    <div class="col-12 mb-3">
+                      <select class="form-select form-select-lg" name="post_type" id="">
+                        <option value="" hidden>Post type</option>
+                        <option value="announcement">Announcement</option>
+                        <option value="event">Event</option>
+                      </select>
+                    </div>
+
                     <!-- Event Description -->
                     <h4>Event Description:</h4>
                     <div class="col-12 mb-3">
@@ -108,7 +119,7 @@
 
           $sql_rows = mysqli_num_rows($online);
         ?>
-        <div class="col-lg-6 rounded mb-2 overflow-y-scroll" style="height: 85vh">
+        <div class="col-lg-6 rounded overflow-y-scroll" style="height: 80vh">
           <div class="container-fluid">
             <!-- Create post starts here -->
             <div class="row mb-4">
@@ -129,7 +140,7 @@
             <div class="row mb-5">
               <div class="col-lg-12 shadow bg-white rounded">
                 <!-- Post header -->
-                <div class="row">
+                <div class="row post-id" value="<?= $row['post_id'] ?>">
                   <div class="col-6 p-2">
                     <div class="row d-flex">
                     <?php
@@ -148,23 +159,26 @@
                       <div class="col-9">
                         <div class="row">
                           <div class="col-12">
-                            <h4><?= $post_name ?></h4>
+                            <h4>Title: <?= $row['post_title'] ?></h4>
                           </div>
                           <div class="col-12">
-                            <p class="fs-5"><?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
+                            <p class="fs-4">posted by: <?= $post_name ?></p>
+                          </div>
+                          <div class="col-12">
+                            <p class="fs-5">uploaded on:<?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col-lg-6">
-                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4"></i>
+                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 edit-post"></i>
                   </div>
                 </div>
                 <!-- Post header ends here -->
                 <!-- Post Description -->
                 <div class="row">
-                  <div class="col-12">
+                  <div class="col-12 d-flex flex-column">
                     <p><?= $row['post_description'] ?></p>
                   </div>
                 </div>
@@ -180,6 +194,11 @@
 
           </div>
         </div>
+        <div class="col-lg-3" style="height: 50vh;">
+          <div class="row">
+            <h3 class="text-center bg-primary">Upcoming Events</h3>
+          </div>
+        </div>
       </div>
     </div>
   </body>
@@ -191,8 +210,9 @@
           // This is for the Excel button
           {
             text: '<i class="fa-solid fa-download"></i>Download Excel',
-            extend: 'excel', 
-            className: 'btn btn-info text-white btn-block'
+            action: function(){
+              window.location.href="../excel.php";
+            }
           },
           // This is for the csv button
           {
@@ -217,6 +237,27 @@
       $(".create-post").on("click" function(e){
         $("#exampleModal").modal("show");
       })
+
+      $(".edit-post").click(function(e){
+            let prod_id = $(this).closest("row").find(".post-id").text();
+            console.log(prod_id);
+            // this is ajax and it will run our php code without refreshing our page
+            // $.ajax({
+            //     method: "POST",
+            //     url: "edit_product.php",
+            //     data: {
+            //         "click_edit_btn": true,
+            //         "product_id": prod_id
+            //     },
+            //     success: function(response){
+            //         $(".edit-modal").html(response);
+            //         $("#view-edit-modal").modal('show');
+            //         console.log(response);
+            //     }
+
+            // })
+        });
+
     });
     
   </script>

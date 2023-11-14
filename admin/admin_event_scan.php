@@ -108,28 +108,44 @@
 
           $sql_rows = mysqli_num_rows($online);
         ?>
-        <div class="col-lg-6 rounded mb-2 bg-white" style="height: 85vh">
-            <div class="row">
-                <div class="col">
-                    <a href="admin_activities.php"><i class="fa-solid fa-left-arrow fa-lg"></i></a>
-                </div>
-            </div>
+        <div class="col-lg-6 rounded mb-2 bg-white" style="height: fit-content;">
             <div class="row">
                 <div class="col-12" id="reader">
-                <input type="file" class="form-control form-control-lg" id="qr-input-file" accept="image/*">
                 </div>
             </div>
             
+        </div>
+        <div class="col-lg-3 rounded d-grid" style="height: fit-content;">
+          <a href="admin_activities.php" class="btn btn-primary btn-lg">Return to Calendar</a>
         </div>
       </div>
     </div>
   </body>
   <script>
+
     $(document).ready(function(){
         function onScanSuccess(decodedText, decodedResult) {
         // handle the scanned code as you like, for example:
-        window.location.href = "admin_seinor_attend.php?qr_content=" + decodedText;
+        window.location.href = "admin_senior_attend.php?qr_content=" + decodedText + "&event_id=<?= $_GET['event_id'] ?>";
         }
+
+    <?php
+      if(isset($_GET['attended']) && $_GET['attended'] == 'true'){
+    ?>
+      if(confirm("Successfully recorded! Would you like to scan another senior?") == false){
+        window.location.href="admin_activities.php";
+      }
+    <?php
+      }
+      if(isset($_GET['exist']) && $_GET['exist'] == 'true'){
+    ?>
+      if(confirm("The senior may have attended already or qr code is invalid. Would you like to try again?") == false){
+        window.location.href="admin_activities.php";
+      }
+    <?php
+      }
+    ?>
+      
 
 function onScanFailure(error) {
   // handle scan failure, usually better to ignore and keep scanning.

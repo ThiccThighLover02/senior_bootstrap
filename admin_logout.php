@@ -31,6 +31,8 @@ unset($_SESSION['admin_email']);
 
 unset($_SESSION['admin_id']);
 
+unset($_SESSION['admin_message']);
+
 #unset($_SESSION['session_no']);
 
 header("Location: index.php"); // Then you will go back to the index.php

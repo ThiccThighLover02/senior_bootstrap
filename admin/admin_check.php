@@ -58,6 +58,8 @@ if (isset($_POST['email']) && isset($_POST['password'])){
 
             $_SESSION['admin_id'] = $row['admin_id'];   //create a id session
 
+            $_SESSION['admin_message'] = $row['message_id']; //session for chats
+
             #a prepared statement to update the status of the senior citizen to "Active"
             $active = "Active"; #we declared this variable because apparently we need a reference for a prepared statement -_-
             $stmt = $conn->prepare("UPDATE admin_tbl SET admin_status= ? WHERE admin_id= ?");

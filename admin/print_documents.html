@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Multiple Documents</title>
+</head>
+<body>
+    <h2>Select Documents to Print</h2>
+
+    <label>
+        <input type="checkbox" value="document1.html"> Document 1
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" value="document2.html"> Document 2
+    </label>
+    <br>
+    <label>
+        <input type="checkbox" value="document3.html"> Document 3
+    </label>
+    <br>
+
+    <button onclick="printSelectedDocuments()">Print Selected Documents</button>
+
+    <div id="printContainer"></div>
+
+    <script>
+        function printSelectedDocuments() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            var printContainer = document.getElementById('printContainer');
+
+            checkboxes.forEach(function (checkbox) {
+                var documentUrl = checkbox.value;
+                var iframe = document.createElement('iframe');
+                iframe.src = documentUrl;
+                printContainer.appendChild(iframe);
+            });
+
+            var printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>Print</title></head><body>');
+            printWindow.document.write(printContainer.innerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+
+            // Wait for the content to load before printing
+            printWindow.onload = function () {
+                printWindow.print();
+                printWindow.onafterprint = function () {
+                    printWindow.close();
+                };
+            };
+        }
+    </script>
+</body>
+</html>

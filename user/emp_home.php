@@ -22,7 +22,8 @@
       include 'emp_navbar.php';
     ?>
     <div class="container-fluid">
-    <!-- Modal starts here -->
+    
+    <!-- Modal for creating posts starts here -->
       <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
@@ -159,7 +160,10 @@
                     </div>
                   </div>
                   <div class="col-lg-6">
-                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4"></i>
+                    <a href="#" id="post-id">
+                      <input type="text" value="<?= $row['post_id'] ?>" hidden>
+                      <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4"></i>
+                    </a>
                   </div>
                 </div>
                 <!-- Post header ends here -->
@@ -214,6 +218,11 @@
         fixedHeader: true,
 
       });
+
+      $("#post-id").on("click", function(e){
+        e.preventDefault();
+        console.log("you want to edit this bruh?");
+      })
       
       $(".create-post").on("click" function(e){
         $("#exampleModal").modal("show");

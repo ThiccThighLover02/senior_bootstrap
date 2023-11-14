@@ -2,7 +2,7 @@
     include '../db_connect.php';
     date_default_timezone_set('Asia/Manila');
     $month = date("m");
-    $events = $conn->prepare("SELECT * FROM activity_tbl WHERE MONTH(post_date)=?");
+    $events = $conn->prepare("SELECT * FROM activity_tbl WHERE MONTH(post_date)=? AND post_type='event'");
     $events->bind_param("s", $month);
     $events->execute();
     $event_res = $events->get_result();
