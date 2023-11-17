@@ -29,7 +29,7 @@
           // this active variable shows the active tab in the side bar
           $active = "actSenior";
           include "admin_left_sidebar.php";  
-          $sql = $conn->prepare("SELECT * FROM senior_tbl S RIGHT JOIN purok_tbl P ON S.senior_purok_id=P.purok_id RIGHT JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id RIGHT JOIN municipality_tbl M ON S.senior_municipality_id=M.municipality_id RIGHT JOIN province_tbl Pr ON S.senior_province_id=Pr.province_id WHERE senior_id=?");
+          $sql = $conn->prepare("SELECT * FROM senior_tbl S RIGHT JOIN purok_tbl P ON S.senior_purok_id=P.purok_id RIGHT JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id RIGHT JOIN municipality_tbl M ON S.senior_municipality_id=M.municipality_id RIGHT JOIN province_tbl Pr ON S.senior_province_id=Pr.province_id INNER JOIN blood_tbl Bl ON S.blood_id=Bl.blood_id INNER JOIN education_tbl E ON S.education_id=E.education_id INNER JOIN religion_tbl R ON S.religion_id=R.religion_id INNER JOIN civil_tbl C ON S.civil_id=C.civil_id WHERE senior_id=?");
           $sql->bind_param("i", $senior_id);
           $sql->execute();
           $result = $sql->get_result();
@@ -37,6 +37,7 @@
           $row = mysqli_fetch_assoc($result);
           $birth_date = new DateTime($row['date_birth']);
           $acc_created = new DateTime($row['account_date'] . $row['account_time']);
+          
         ?>
 
         <div class="col-lg-8 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-y-scroll" style="height: 83vh">
@@ -110,11 +111,11 @@
               <div class="row">
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Education:</h3>
-                    <p class="fs-5"><?= $row['education'] ?></p>
+                    <p class="fs-5"><?= $row['education_attainment'] ?></p>
                 </div>
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Religion:</h3>
-                    <p class="fs-5"><?= $row['religion'] ?></p>
+                    <p class="fs-5"><?= $row['religion_name'] ?></p>
                 </div>
               </div>
 
@@ -162,17 +163,59 @@
               <div class="row">
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Blood Type:</h3>
-                    <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                    <p class="fs-5"><?= $row['blood_type'] ?></p>
                 </div>
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Physical Disability:</h3>
-                    <p class="fs-5"><?= str_pad($row['emergency_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                    <?php
+                      if(is_null($row['physical_disability'])){
+                        $physical = "No physical disability";
+                      }
+                      elseif(!is_null($row['physical_disability'])){
+                        $physical = $row['physical_disability'];
+                      }
+                    ?>
+                    <p class="fs-5"><?= $physical ?></p>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Health Conditions:</h3>
-                    <p class="fs-5"><?= $row['senior_email'] ?></p>
+                    <?php
+                      if(is_null($row['health'])){
+                    ?>
+                      <p class="fs-5">No health conditions</p>
+                    <?php 
+                      }
+                      else{
+                        $health = unserialize($row['health'])
+                    ?> 
+                      <ul>
+                    <?php
+                    $allFalse = array_reduce($health, function($carry, $value) {
+                      return $carry && !$value;
+                    }, true);
+                    if($allFalse){
+                    ?>
+                        <li class="fs-5">No health conditions</li>
+                    <?php
+                    }
+                    else{
+                      foreach($health as $condition => $value){
+                        if($value == true){
+                    ?>
+                        <li class="fs-5"><?= $condition ?></li>
+                    <?php
+                        }
+                      }
+                    ?>
+                      </ul>
+                    <?php
+                      }
+                    }
+                    ?>
+                    <ul>
+                    </ul>
                 </div>
               </div>
             </div>

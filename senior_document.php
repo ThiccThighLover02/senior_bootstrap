@@ -6,7 +6,7 @@
         $senior_id = $_GET['id'];
 
         #create a query where we will get the data in the database
-        $sql = $conn->prepare("SELECT * FROM senior_tbl S INNER JOIN purok_tbl P ON S.senior_purok_id=P.purok_id INNER JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id INNER JOIN municipality_tbl M ON S.senior_municipality_id=M.municipality_id INNER JOIN province_tbl Pr ON S.senior_province_id=Pr.province_id WHERE senior_id=?");
+        $sql = $conn->prepare("SELECT * FROM senior_tbl S INNER JOIN purok_tbl P ON S.senior_purok_id=P.purok_id INNER JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id INNER JOIN municipality_tbl M ON S.senior_municipality_id=M.municipality_id INNER JOIN province_tbl Pr ON S.senior_province_id=Pr.province_id INNER JOIN education_tbl E ON S.education_id=E.education_id INNER JOIN religion_tbl R ON S.religion_id=R.religion_id INNER JOIN civil_tbl C ON S.civil_id=C.civil_id WHERE senior_id=?");
         $sql->bind_param("i", $senior_id);
         $sql->execute();
         $result = $sql->get_result();
@@ -75,12 +75,12 @@
 
             <div class="religion">
                 <h3>Religion:</h3>
-                <p><?= $row['religion'] ?></p>
+                <p><?= $row['religion_name'] ?></p>
             </div>
 
             <div class="education">
                 <h3>Educational Attainment:</h3>
-                <p><?= $row['education'] ?></p>
+                <p><?= $row['education_attainment'] ?></p>
             </div>
         </div>
 
@@ -115,34 +115,28 @@
         </div>
 
         <form action="" class="health-content">
+
+        <?php
+            $health = unserialize($row['health']);
+            foreach($health as $condition => $value){
+                if($value == true){
+        ?>
             <div>
                 <input type="checkbox" checked>
-                <label for="">Hypertension</label>
+                <label for=""><?= $condition ?></label>
             </div>
-            <div>
-                <input type="checkbox" checked>
-                <label for="">Arthritis/Gout</label>
-            </div>
-            <div>
-                <input type="checkbox">
-                <label for="">Coronary Heart Disease</label>
-            </div>
-            <div>
-                <input type="checkbox" checked>
-                <label for="">Diabetes</label>
-            </div>
+        <?php
+                }
+                else{
+        ?>
             <div>
                 <input type="checkbox">
-                <label for="">Chronic Kidney Disease</label>
+                <label for=""><?= $condition ?></label>
             </div>
-            <div>
-                <input type="checkbox">
-                <label for="">Alzheimers/Dementia</label>
-            </div>
-            <div>
-                <input type="checkbox">
-                <label for="">Chronic Obstructive Pulmorary Disease</label>
-            </div>
+        <?php
+                }
+            }
+        ?>
 
             <div class="blood-type">
                 <h3>Blood Type:</h3>

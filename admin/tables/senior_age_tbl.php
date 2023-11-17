@@ -1,5 +1,8 @@
 <?php
-    $sql = mysqli_query($conn, "SELECT * FROM senior_tbl ORDER BY citizenship ASC");
+    if(isset($_GET['filtu']) && $_GET['filtu'] == 'all'){
+      $sql = $conn->prepare("SELECT * FROM senior_tbl");
+      $sql->execute();
+      $result = $sql->get_result();
 ?>
 
 <table class="table table-striped table-bordered align-middle thead-dark" id="myTable">
@@ -15,7 +18,7 @@
             <tbody>
             <?php
               // this loop will iterate the rows and display the data
-              while($row = mysqli_fetch_array($sql)){
+              while($row = mysqli_fetch_array($result)){
               $senior_stat = "";
               // if status is active the icon will be color green
               if($row['status'] == "Active"){
@@ -42,3 +45,9 @@
 
             </tbody>
           </table>
+<?php
+    }
+    else{
+      header("Location: admin_view_seniors.php");
+    }
+?>

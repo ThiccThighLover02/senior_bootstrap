@@ -15,6 +15,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
         include "admin_links.php";
+
+        //   Get the data from the request_tbl
+        $sql = $conn->prepare("SELECT * FROM request_tbl R  RIGHT JOIN purok_tbl P ON R.purok_id=P.purok_id RIGHT JOIN barangay_tbl B ON R.barangay_id=B.barangay_id RIGHT JOIN municipality_tbl M ON R.municipality_id=M.municipality_id RIGHT JOIN province_tbl Pr ON R.province_id=Pr.province_id INNER JOIN education_tbl E ON R.request_education_id=E.education_id INNER JOIN civil_tbl Cl ON R.request_civil_id=Cl.civil_id INNER JOIN religion_tbl Rl ON R.request_religion_id=Rl.religion_id WHERE request_id=?");
+        $sql->bind_param("i", $request_id);
+        $sql->execute();
+        $sql_result = $sql->get_result();
+        $row = mysqli_fetch_assoc($sql_result);
+        $birth_date = new DateTime($row['birth_date']);
+        $health_array = $row['health'];
+        $health = unserialize($health_array);
     ?>
     <title>Senior System</title>
 </head>
@@ -24,7 +34,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Attachments</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -32,26 +42,18 @@
           <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="10000">
-              <img src="..." class="d-block w-100" alt="...">
+              <img src="../user/requests/birth_certificates/<?= $row['birth_certificate'] ?>" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h5>Birth Certificate</h5>
               </div>
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-              <img src="..." class="d-block w-100" alt="...">
+              <img src="../user/requests/barangay_certificates/<?= $row['barangay_certificate'] ?>" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h5>Barangay Certificate</h5>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="..." class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
               </div>
             </div>
           </div>
@@ -66,8 +68,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
+        
+        <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">Understood</button>
       </div>
     </div>
   </div>
@@ -83,21 +85,13 @@
           $active = "actRequest";
           include "admin_left_sidebar.php";  
 
-        //   Get the data from the request_tbl
-          $sql = $conn->prepare("SELECT * FROM request_tbl R  RIGHT JOIN purok_tbl P ON R.purok_id=P.purok_id RIGHT JOIN barangay_tbl B ON R.barangay_id=B.barangay_id RIGHT JOIN municipality_tbl M ON R.municipality_id=M.municipality_id RIGHT JOIN province_tbl Pr ON R.province_id=Pr.province_id WHERE request_id=?");
-          $sql->bind_param("i", $request_id);
-          $sql->execute();
-          $sql_result = $sql->get_result();
-          $row = mysqli_fetch_assoc($sql_result);
-          $birth_date = new DateTime($row['birth_date']);
+        
         ?>
-
-        <div class="col-lg-6 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-auto">
-          <a href="admin_requests.php"><i class="fa-solid fa-arrow-left fa-2xl float-start text-primary"></i></a>  
+        <div class="col-lg-7 order-2 order-xl-1 order-lg-1 order-sm-2 shadow pt-4 bg-white rounded overflow-y-scroll" style="height: 83vh">
           <div class="row d-flex justify-content-center">
-            <div class="col-5 border border-dark">
+            <div style="height: 30vh; width: 30vh;">
               <div class="ratio ratio-1x1">
-                <img class="img-fluid" src="../user/requests/id_pics/<?= $row['id_pic'] ?>" alt="">
+                <img class="img-fluid border border-black" src="../user/requests/id_pics/<?= $row['id_pic'] ?>" alt="">
               </div>
             </div>
           </div>
@@ -106,40 +100,136 @@
                 <h1 class="text-center"><?= $row['full_name'] ?></h1>
             </div>
           </div>
-          <!-- birthdate and age -->
-          <div class="row">
-            <div class="col-md-6 d-flex flex-column">
-            <h2 class="text-primary">Birthdate:</h3>
-                <p class="fs-5"><?= $birth_date->format("M d, Y") ?></p>
-            </div>
-            <div class="col-md-6 d-flex flex-column">
-                <h2 class="text-primary">Age:</h3>
-                <p class="fs-5"><?= $row['age'] ?></p>
-            </div>
-          </div>
-          <!-- address and contact no   -->
-          <div class="row">
-            <div class="col-md-6 d-flex flex-column">
-                <h2 class="text-primary">Address:</h3>
-                <p class="fs-5"><?= $row['purok_no'] . ", " . $row['barangay_name'] . ", " . $row['municipality_name'] . ", " . $row['province_name'] ?></p>
-            </div>
-            <div class="col-md-6 d-flex flex-column">
-                <h2 class="text-primary">Contact No:</h3>
-                <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5"><?= $row['sex'] ?></p>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">General Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact Info</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="health-tab" data-bs-toggle="tab" data-bs-target="#health" type="button" role="tab" aria-controls="contact" aria-selected="false">Health Info</button>
+            </li>
+            
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <!-- address and birthdate   -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Address:</h3>
+                    <p class="fs-5"><?= $row['purok_no'] . ", " . $row['barangay_name'] . ", " . $row['municipality_name'] . ", " . $row['province_name'] ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                <h2 class="text-primary">Birthdate:</h3>
+                    <p class="fs-5"><?= $birth_date->format("M d, Y") ?></p>
+                </div>
+              </div>
+              <!-- birthplace and ses -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                  <h2 class="text-primary">Birth Place:</h3>
+                  <p class="fs-5"><?= $row['place_birth'] ?></p>
+                </div>
+                
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Gender:</h3>
+                    <p class="fs-5"><?= $row['sex'] ?></p>
+                </div>
+              </div>
+
+              <!-- Citizenship and age -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Citizenship:</h3>
+                    <p class="fs-5"><?= $row['citizenship'] ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Age:</h3>
+                    <p class="fs-5"><?= $row['age'] ?></p>
+                </div>
+              </div>
+
+              <!-- Education and religion -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Education:</h3>
+                    <p class="fs-5"><?= $row['education_attainment'] ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Religion:</h3>
+                    <p class="fs-5"><?= $row['religion_name'] ?></p>
+                </div>
+              </div>
+
+              <!-- Education and religion -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Civil Status:</h3>
+                    <p class="fs-5"><?= $row['civil_status'] ?></p>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5"><?= $row['civil_status'] ?></p>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <!-- address and birthdate   -->
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Contact Number:</h3>
+                    <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Guardian's Number:</h3>
+                    <p class="fs-5"><?= str_pad($row['emergency_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Email Address:</h3>
+                    <p class="fs-5"><?= $row['senior_email'] ?></p>
+                </div>
+              </div>
             </div>
+            <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+
+                    <h2 class="text-primary">Blood Type:</h3>
+                    <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Physical Disability:</h3>
+                  <?php
+                    if(is_null($row['physical_disability'])){
+                      $disability = "No physical disability";
+                    }
+                    else{
+                      $disability = $row['physical_disability'];
+                    }
+                  ?>
+                    <p class="fs-5"><?= $disability ?></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <h2 class="text-primary">Health Conditions:</h3>
+                    <?php
+                      foreach($health as $condition => $value){
+                        if($value == true){
+                    ?>
+                        <p class="fs-5"><?= $condition ?></p>
+                    <?php
+                        }
+                      }
+                    ?>
+                </div>
+              </div>
+            </div>
+
           </div>
+          
         </div>
+        
         <div class="col-lg-3 col-sm-12 order-1 order-xl-2 order-sm-1">
             <div class="row gy-3">
                 <div class="col-12 d-grid">
@@ -154,42 +244,6 @@
                 </div>
             </div>
             
-        </div>
-      </div>
-      <!-- first row ends here -->
-      <div class="row mt-5 d-flex justify-content-center">
-        <div class="col-lg-6 bg-white">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5">Male</p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5">Single</p>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5">Male</p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5">Single</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Gender:</h3>
-                <p class="fs-5">Male</p>
-            </div>
-            <div class="col-lg-6 d-flex flex-column">
-                <h2 class="text-primary">Civil Status:</h3>
-                <p class="fs-5">Single</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

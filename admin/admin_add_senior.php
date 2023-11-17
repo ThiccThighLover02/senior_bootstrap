@@ -33,9 +33,16 @@
     $full_name = $first_name . " " . $middle_name . " " . $last_name;
     $birth_date = $row['birth_date'];
     $age = $row['age'];
+    $emergency_no = $row['emergency_no'];
+    $education = $row['request_education_id'];
+    $religion = $row['request_religion_id'];
+    $blood_id = $row['blood_id'];
+    $physical_disability = $row['physical_disability'];
+    $health_array = $row['health'];
+    $other_health = $row['other_health'];
     $birth_place = $row['place_birth'];
     $sex = $row['sex'];
-    $civil_status = $row['civil_status'];
+    $civil_status = $row['request_civil_id'];
     $citizenship = $row['citizenship'];
     $cell_no = $row['cell_no'];
     $purok = $row['purok_id'];
@@ -116,8 +123,8 @@
 
 
 
-    $stmt = $conn->prepare("INSERT INTO `senior_tbl`(`status`, `full_name`, `first_name`, `mid_name`, `last_name`, `extension`, `message_id`,  `senior_purok_id`, `senior_barangay_id`, `senior_municipality_id`, `senior_province_id`, `date_birth`, `birth_place`, `sex`, `citizenship`, `age`, `blood_id`, `physical_disability`, `health`, `other_health`, `education`, `cell_no`, `emergency_no`, `religion`, `civil_status`, `senior_email`, `senior_password`, `qr_image`, `id_pic`, `birth_certificate`, `bar_certificate`, `qr_contents`, `account_time`, `account_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"); 
-    $stmt->bind_param("ssssssiiiissssisssssiisssssssssss", $status, $full_name, $first_name, $middle_name, $last_name, $extension, $message_id, $purok, $barangay, $municipality, $province, $birth_date, $birth_place, $sex, $citizenship, $age, $blood_id, $physical_disability, $health_array, $other_health, $education, $cell_no, $emergency_no, $religion, $civil_status, $email, $password, $fileName, $row['id_pic'], $row['birth_certificate'], $row['barangay_certificate'], $codeContents, $time_created, $date_created);
+    $stmt = $conn->prepare("INSERT INTO `senior_tbl`(`status`, `full_name`, `first_name`, `mid_name`, `last_name`, `extension`, `message_id`, `senior_purok_id`, `senior_barangay_id`, `senior_municipality_id`, `senior_province_id`, `date_birth`, `birth_place`, `sex`, `citizenship`, `age`, `blood_id`, `physical_disability`, `health`, `other_health`, `education_id`, `cell_no`, `emergency_no`, `religion_id`, `civil_id`, `senior_email`, `senior_password`, `qr_image`, `id_pic`, `birth_certificate`, `bar_certificate`, `qr_contents`, `account_time`, `account_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"); 
+    $stmt->bind_param("ssssssiiiiissssiissssiisssssssssss", $status, $full_name, $first_name, $middle_name, $last_name, $extension, $message_id, $purok, $barangay, $municipality, $province, $birth_date, $birth_place, $sex, $citizenship, $age, $blood_id, $physical_disability, $health_array, $other_health, $education, $cell_no, $emergency_no, $religion, $civil_status, $email, $password, $fileName, $row['id_pic'], $row['birth_certificate'], $row['barangay_certificate'], $codeContents, $time_created, $date_created);
     $stmt->execute();
 
     $event_log = $conn->prepare("INSERT INTO `senior_system`.`event_log` (`act_admin_id`,`action_id`, `act_date`, `act_time`) VALUES (?, ?, ?, ?);");

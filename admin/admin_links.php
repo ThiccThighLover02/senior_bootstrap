@@ -22,3 +22,6 @@
 
 <!-- This is for the scanner -->
 <script src="../node_modules/html5-qrcode/html5-qrcode.min.js"></script> <!-- call the script that we will use to scan the qr code -->
+
+<!-- this is for the charts -->
+<script src="../node_modules/char.js/char.umd.js"></script>

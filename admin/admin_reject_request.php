@@ -29,9 +29,6 @@
                     unlink($id_original);
                     if(file_exists($bar_original)){
                         unlink($bar_original);
-                        if(file_exists()){
-                            unlink($valid_original);
-                        }
                     }
                 }
             }
@@ -41,29 +38,29 @@
         $result = $sql->get_result();
         $row = mysqli_fetch_assoc($result);
         
-        $subject = "Account Approval";
-        $message = "Hello, " . $row['first_name'] . " " . $row['last_name'] . ", we are sorry to inform you but your request has been rejected, 
-        this may be due to you not providing the requirements for verification, or false information has been given. Please try again and provide clear pictures for better verification.";
-        $emailadd = $row['user_email'];
+        // $subject = "Account Approval";
+        // $message = "Hello, " . $row['first_name'] . " " . $row['last_name'] . ", we are sorry to inform you but your request has been rejected, 
+        // this may be due to you not providing the requirements for verification, or false information has been given. Please try again and provide clear pictures for better verification.";
+        // $emailadd = $row['user_email'];
 
-        $mail = new PHPMailer(true);
+        // $mail = new PHPMailer(true);
         
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'seniorcitizensystem@gmail.com';
-        $mail->Password = 'qkjtmhbkbuqnixdj';
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = 465;
+        // $mail->isSMTP();
+        // $mail->Host = 'smtp.gmail.com';
+        // $mail->SMTPAuth = true;
+        // $mail->Username = 'seniorcitizensystem@gmail.com';
+        // $mail->Password = 'qkjtmhbkbuqnixdj';
+        // $mail->SMTPSecure = 'ssl';
+        // $mail->Port = 465;
         
-        $mail->setFrom('seniorcitizensystem@gmail.com');
-        $mail->addAddress('magtalascarlson@gmail.com');
-        $mail->isHTML(true);
+        // $mail->setFrom('seniorcitizensystem@gmail.com');
+        // $mail->addAddress('magtalascarlson@gmail.com');
+        // $mail->isHTML(true);
         
-        $mail->Subject = $subject;
-        $mail->Body = $message;
+        // $mail->Subject = $subject;
+        // $mail->Body = $message;
         
-        $mail->send();
+        // $mail->send();
 
             
 

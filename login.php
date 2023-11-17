@@ -42,10 +42,10 @@
                     <label for="" class="text-lg fs-5">Show Password</label>
                   </div>
                   <button type="submit" class="btn btn-block btn-primary text-white">Login</button>
-                  <a href="senior_create_acc.php" class="btn btn-block btn-dark text-white">
+                  <a href="senior/senior_create_acc.php" class="btn btn-block btn-dark text-white">
                     Sign Up
                   </a>
-                  <a href="senior_forgot.php" class="text-center" style="text-decoration: none;">Forgot Password</a>
+                  <a href="senior/senior_forgot.php" class="text-center" style="text-decoration: none;">Forgot Password</a>
                 </form>
                 
 

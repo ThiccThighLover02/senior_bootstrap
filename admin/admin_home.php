@@ -52,7 +52,7 @@
                     <!-- Event Description -->
                     <h4>Event Description:</h4>
                     <div class="col-12 mb-3">
-                      <textarea class="form-control" name="description" id="" cols="30" rows="10"></textarea>
+                      <textarea class="form-control" name="description" id="" cols="30" rows="10" placeholder="Enter the type description here, please include the requirements for the said event"></textarea>
                     </div>
                     <h4>Date of Event:</h4>
                     <div class="col-12 mb-3">
@@ -119,7 +119,7 @@
 
           $sql_rows = mysqli_num_rows($online);
         ?>
-        <div class="col-lg-6 rounded overflow-y-scroll" style="height: 80vh">
+        <div class="col-lg-7 rounded overflow-y-scroll" style="height: 80vh">
           <div class="container-fluid">
             <!-- Create post starts here -->
             <div class="row mb-4">
@@ -135,13 +135,16 @@
               while($row = mysqli_fetch_assoc($post_sql)){
                 $date_create = new DateTime($row['date_created']);
                 $time_create = new DateTime($row['time_created']);
+                $post_date = new DateTime($row['post_date']);
+                $post_time_start = new DateTime($row['time_start']);
+                $post_time_end = new DateTime($row['time_end']);
                 $post_pic = "";
             ?>
             <div class="row mb-5">
               <div class="col-lg-12 shadow bg-white rounded">
                 <!-- Post header -->
                 <div class="row post-id" value="<?= $row['post_id'] ?>">
-                  <div class="col-6 p-2">
+                  <div class="col-8 p-2">
                     <div class="row d-flex">
                     <?php
                       if(!is_null($row['post_admin_id'])){
@@ -153,33 +156,30 @@
                         $post_name = $row['full_name'];
                       }
                     ?>
-                      <div class="col-3">
-                        <img class="img-fluid rounded-circle" src="<?= $post_pic ?>" alt="" style="width: 7vw">
-                      </div>
-                      <div class="col-9">
+                      <div class="col-12">
                         <div class="row">
                           <div class="col-12">
                             <h4>Title: <?= $row['post_title'] ?></h4>
                           </div>
                           <div class="col-12">
-                            <p class="fs-4">posted by: <?= $post_name ?></p>
-                          </div>
-                          <div class="col-12">
-                            <p class="fs-5">uploaded on:<?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
+                            <p class="fs-5 text-muted"><i class="fa-solid fa-user fa-xs"></i> Admin . <i class="fa-regular fa-calendar"></i> <?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-6">
-                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 edit-post"></i>
+                  <div class="col-lg-4">
+                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 lazy-modal" data-toggle="modal" data-target="#myModal<?= $row['post_id'] ?>" style="cursor: pointer;"></i>
+
                   </div>
                 </div>
                 <!-- Post header ends here -->
                 <!-- Post Description -->
                 <div class="row">
                   <div class="col-12 d-flex flex-column">
-                    <p><?= $row['post_description'] ?></p>
+                    <p class="fs-5"><b>When:</b> <?= $post_date->format("M d, Y") ?> <?= $post_time_start->format("H:i a") . "-" .$post_time_end->format("H:i a") ?></p>
+                    <p class="fs-5"><b>Where:</b> <?= $row['post_loc'] ?></p>
+                    <p class="fs-5"><?= $row['post_description'] ?></p>
                   </div>
                 </div>
                 <!-- Post image -->
@@ -238,9 +238,9 @@
         $("#exampleModal").modal("show");
       })
 
-      $(".edit-post").click(function(e){
-            let prod_id = $(this).closest("row").find(".post-id").text();
-            console.log(prod_id);
+      $("#post-id").click(function(e){
+        let post_id = $(this).closest("row").find(".post-id").text();
+        console.log(post_id);
             // this is ajax and it will run our php code without refreshing our page
             // $.ajax({
             //     method: "POST",

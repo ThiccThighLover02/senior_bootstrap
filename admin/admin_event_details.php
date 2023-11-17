@@ -1,8 +1,16 @@
 <?php
     session_start();
     include "../db_connect.php";
+    date_default_timezone_set("Asia/Manila");
     // If there is a admin status session
     if(isset($_SESSION['admin_status']) && $_SESSION['admin_status'] == "Active"){
+        $event_id = $_GET['id'];
+        $date = date("Y-m-d");
+        $attend_senior = $conn->prepare("SELECT * FROM attend_tbl WHERE activity_id=?");
+        $attend_senior->bind_param("i", $event_id);
+        $attend_senior->execute();
+        $attend_result = $attend_senior->get_result();
+        $attend_rows = mysqli_num_rows($attend_result);
 
 ?>
 
@@ -25,68 +33,70 @@
       <div class="row gx-5 pt-3" id="navbarSupportedContent">
         <?php
           // this active variable shows the active tab in the side bar
-          $active = "actSenior";
+          $active = "actEvent";
           include "admin_left_sidebar.php";  
         ?>
 
         <!-- Table Starts here -->
-        <div class="col-lg-7 p-3 bg-white table-responsive rounded">
-          <?php
-            if(isset($_GET['filter']) && $_GET['filter'] == "default"){
-              include "tables/senior_default_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "barangay"){
-              include "tables/senior_barangay_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "sex"){
-              include "tables/senior_sex_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "citizenship"){
-              include "tables/senior_citizenship_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == ""){
-              include "tables/senior_sex_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "age"){
-              include "tables/senior_age_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "education"){
-              include "tables/senior_education_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "religion"){
-              include "tables/senior_religion_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "civil"){
-              include "tables/senior_civil_tbl.php";
-            }
-            else {
-              include "tables/senior_default_tbl.php";
-            }
-          ?>
-        </div>
-        <!-- Table ends here -->
-
-        <div class="col-lg-3">
-          <form action="admin_view_seniors.php" method="GET">
-            <div class="form-group d-grid">
-              <select name="filter" id="" class="form-select form-select-lg">
-                <option value="" hidden>Filter by</option>
-                <option value="barangay">Barangay</option>
-                <option value="sex">Sex</option>
-                <option value="citizenship">Citizenship</option>
-                <option value="age">Age</option>
-                <option value="education">Educational Attainment</option>
-                <option value="religion">Religion</option>
-                <option value="civil status">Civil Status</option>
-              </select>
-              <button class="btn btn-primary text-white fs-5 mt-2">Filter</button>
+        <div class="col-lg-7 p-3">
+         
+            <div class="row d-flex gap-2">
+                <div class="col-lg-5 bg-white rounded-4 shadow p-3 d-flex flex-column align-items-start" style="height: 20vh" id="senior-attend">
+                    <h3 class="text-primary">No. of seniors attended</h3>
+                    <p class="fs-2"><?= $attend_rows ?></p>
+                </div>
+                <?php
+                    $all_seniors = $conn->prepare("SELECT * FROM senior_tbl");
+                    $all_seniors->execute();
+                    $all_result = $all_seniors->get_result();
+                    $all_rows = mysqli_num_rows($all_result);
+                    $absent_seniors = $all_rows - $attend_rows;
+                ?>
+                <div class="col-lg-5 bg-white rounded-4 shadow p-3 d-flex flex-column align-items-start" style="height: 20vh">
+                    <h3 class="text-primary">Absent</h3>
+                    <p class="fs-2"><?= $absent_seniors ?></p>
+                </div>
             </div>
-          </form>
+            <div class="row">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-lg-3 p-3">
+            <div class="row">
+                <div class="col-lg-12 bg-white">
+                    <h1>Event Details</h1>
+                </div>
+            </div>
         </div>
       </div>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    const ctx = document.getElementById('myChart');
+    <?php
+        include "bar_chart.php";
+    ?>
+    new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Alua', 'Calaba', 'Malapit', 'Mangga', 'Poblacion', 'Pulo', 'San Roque', 'Santo Cristo', 'Tabon'],
+        datasets: [{
+        label: '# of Votes',
+        data: <?= $js_array ?>,
+        borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+        y: {
+            beginAtZero: true
+        }
+        }
+    }
+    });
+
     $(document).ready(function(){
       $("#deleteBtn").on("click", function(){
         let senior_id = $(this).closest("tr").find(".senior_id").text();

@@ -42,17 +42,20 @@
               while($row = mysqli_fetch_assoc($post_sql)){
                 $date_create = new DateTime($row['date_created']);
                 $time_create = new DateTime($row['time_created']);
+                $post_date = new DateTime($row['post_date']);
+                $post_time_start = new DateTime($row['time_start']);
+                $post_time_end = new DateTime($row['time_end']);
                 $post_pic = "";
             ?>
-            <div class="row mb-5">
+           <div class="row mb-5">
               <div class="col-lg-12 shadow bg-white rounded">
                 <!-- Post header -->
-                <div class="row">
-                  <div class="col-6 p-2">
+                <div class="row post-id" value="<?= $row['post_id'] ?>">
+                  <div class="col-8 p-2">
                     <div class="row d-flex">
                     <?php
                       if(!is_null($row['post_admin_id'])){
-                        $post_pic = "../admin/admin_pic/admin_pic.jpg";
+                        $post_pic = "admin_pic/admin_pic.jpg";
                         $post_name = "Admin";
                       }
                       elseif(!is_null($row['post_emp_id'])){
@@ -60,30 +63,29 @@
                         $post_name = $row['full_name'];
                       }
                     ?>
-                      <div class="col-3">
-                        <img class="img-fluid rounded-circle" src="<?= $post_pic ?>" alt="" style="width: 7vw">
-                      </div>
-                      <div class="col-9">
+                      <div class="col-12">
                         <div class="row">
                           <div class="col-12">
-                            <h4><?= $post_name ?></h4>
+                            <h2>Title: <?= $row['post_title'] ?></h2>
                           </div>
                           <div class="col-12">
-                            <p class="fs-5"><?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
+                            <p class="fs-5 text-muted"><i class="fa-solid fa-user fa-xs"></i> Admin . <i class="fa-regular fa-calendar"></i> <?= $date_create->format("M d, Y") . " . " .$time_create->format("H:iA") ?></p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-6">
-                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4"></i>
+                  <div class="col-lg-4">
+                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 edit-post"></i>
                   </div>
                 </div>
                 <!-- Post header ends here -->
                 <!-- Post Description -->
                 <div class="row">
-                  <div class="col-12">
-                    <p><?= $row['post_description'] ?></p>
+                  <div class="col-12 d-flex flex-column">
+                    <p class="fs-5"><b>When:</b> <?= $post_date->format("M d, Y") ?> <?= $post_time_start->format("H:i a") . "-" .$post_time_end->format("H:i a") ?></p>
+                    <p class="fs-5"><b>Where:</b> <?= $row['post_loc'] ?></p>
+                    <p class="fs-5"><?= $row['post_description'] ?></p>
                   </div>
                 </div>
                 <!-- Post image -->

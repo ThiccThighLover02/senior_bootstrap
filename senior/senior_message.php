@@ -92,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="row overflow-y-scroll message-contain" style="height: 60vh" id="chat-area">
+            <div class="row overflow-y-scroll message-contain" style="height: 70vh" id="chat-area">
                 
             </div>
 

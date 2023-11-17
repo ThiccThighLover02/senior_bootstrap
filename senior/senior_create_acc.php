@@ -27,14 +27,14 @@
     ?>
         <nav class="nav collapse navbar-collapse fs-4 d-flex gap-5 next-nav d-flex justify-content-end" id="nav-buttons">
         <a class="nav-link text-white active" aria-current="page" href="../index.php">Home</a>
-        <a class="nav-link text-white" href="about.php">About Us</a>
-        <a class="nav-link text-white" href="faq.php">FAQ</a>
-        <a class="nav-link text-white" href="contact.php" tabindex="-1">Contact Us</a>
-        <a class="nav-link text-white" href="login.php" tabindex="-1">Login</a>
-        <a class="nav-link text-white" href="senior/senior_create_acc.php" tabindex="-1">Sign up</a> 
+        <a class="nav-link text-white" href="../about.php">About Us</a>
+        <a class="nav-link text-white" href="../faq.php">FAQ</a>
+        <a class="nav-link text-white" href="../contact.php" tabindex="-1">Contact Us</a>
+        <a class="nav-link text-white" href="../login.php" tabindex="-1">Login</a>
+        <a class="nav-link text-white" href="senior_create_acc.php" tabindex="-1">Sign up</a> 
     </nav>
         <!-- container for header and form -->
-        <div class="container-sm bg-white mt-4 p-5 rounded-3 overflow-auto" style="">
+        <div class="container-sm bg-white mt-2 p-5 rounded-3 overflow-auto" style="">
             <div class="row">
                 <div class="col-12 d-flex justify-content-center">
                     <img src="../munisipyo.png" alt="" class="image-responsive" style="width: 10vw;">
@@ -182,7 +182,7 @@
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Health Conditions -->
-                            <input type="text" class="form-control form-control-lg" name="physical_disability" placeholder="Physical Disability" required>
+                            <input type="text" class="form-control form-control-lg" name="physical_disability" placeholder="Physical Disability(leave blank if none)">
                             <label for="" class="invalid-feedback mb-1">Require</label>
                         </div>
                         <div class="col-12 mb-3">
@@ -208,14 +208,14 @@
                             <label for="">Chronic kidney diesease</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input mb-3" value="Alzheimer's/Dementia" name="health[]">
+                            <input type="checkbox" class="form-check-input mb-3" value="Alzheimer" name="health[]">
                             <label for="">Alzheimer's/Dementia</label>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input mb-3" value="Chronic Obstructive Pulmonary diesease" name="health[]">
                             <label for="">Chronic Obstructuve Pulmonary disease</label>
                         </div>
-                        <input type="text" class="form-control form-control-lg mb-3" name="other_health" placeholder="Others(please specify)">
+                        <input type="text" class="form-control form-control-lg mb-3" name="other_health" placeholder="Others(please specify leave blank if none)">
                         </div>
                             <label for="" class="invalid-feedback mb-1">Require</label>
                         </div>
@@ -228,13 +228,14 @@
                         <div class="col-12 mb-3">
                             <select name="education" id="" class="form-select form-select-lg" required>
                                 <option value="" hidden>Educational Attainment</option>
-                                <option value="No Education">No Education</option>
-                                <option value="Elementary">Elementary</option>
-                                <option value="Highschool">Highschool</option>
-                                <option value="College">College</option>
-                                <option value="Vocational">Vocational</option>
-                                <option value="Master's Degree">Master's Degree</option>
-                                <option value="Doctoral">Doctoral</option>
+                            <?php
+                                $educ_sql = mysqli_query($conn, "SELECT * FROM education_tbl");
+                                while($row = mysqli_fetch_assoc($educ_sql)){
+                            ?>
+                                <option value="<?= $row['education_id'] ?>"><?= $row['education_attainment'] ?></option>
+                            <?php
+                                }
+                            ?>
                             </select>
                             <label for="" class="invalid-feedback mb-1">Require</label>
                         </div>
@@ -256,7 +257,7 @@
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Emergency Contact -->
-                            <input type="text" class="form-control form-control-lg6677" name="emergency_no" id="" placeholder="Emergency Contact" required>
+                            <input type="text" class="form-control form-control-lg" name="emergency_no" id="" placeholder="Guardians's Contact Number" required>
                             <label for="" class="invalid-feedback mb-1">Require</label>
                         </div>
                         
@@ -266,9 +267,32 @@
                         <!-- Other information -->
                         <h4>Other Information:</h4>
                         <!-- Religion -->
-                        <input type="text" class="form-control form-control-lg mb-3" id="" name="religion" placeholder="Religion">
+                        <select name="religion" id="" class="form-select form-select-lg mb-3">
+                            <option value="" hidden>Religion</option>
+                        
+                        <?php
+                            $religion_sql = mysqli_query($conn, "SELECT * FROM religion_tbl");
+                            while($row = mysqli_fetch_assoc($religion_sql)){
+                        ?>
+                            <option value="<?= $row['religion_id'] ?>"><?= $row['religion_name'] ?></option>
+                        <?php
+                            }
+                        ?>
+                        </select>
+                        
                         <!-- Civil Status -->
-                        <input type="text" class="form-control form-control-lg mb-3" id="" name="civil_status" placeholder="Civil Status"> 
+                        <select name="civil_status" id="" class="form-select form-select-lg mb-3">
+                            <option value="" hidden>Civil Status</option>
+                        
+                        <?php
+                            $civil_sql = mysqli_query($conn, "SELECT * FROM civil_tbl");
+                            while($row = mysqli_fetch_assoc($civil_sql)){
+                        ?>
+                            <option value="<?= $row['civil_id'] ?>"><?= $row['civil_status'] ?></option>
+                        <?php
+                            }
+                        ?>
+                        </select>
                     </div>
 
                     <div class="form-group d-flex flex-column">

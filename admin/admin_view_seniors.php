@@ -32,36 +32,49 @@
         <!-- Table Starts here -->
         <div class="col-lg-7 p-3 bg-white table-responsive rounded">
           <?php
-            if(isset($_GET['filter']) && $_GET['filter'] == "default"){
+            if(isset($_GET['filwan'])){
+
+              #we'll use switch case to get the get, so that we can filter out and display the respective tables hahah
+              switch($_GET['filwan']){
+
+                case "barangay":
+                  include 'tables/senior_barangay_tbl.php';
+                  break;
+
+                case "sex":
+                  include 'tables/senior_sex_tbl.php';
+                  break;
+
+                  case "age":
+                    include 'tables/senior_age_tbl.php';
+                    break;
+
+                case "citizenship":
+                  include 'tables/senior_citizenship_tbl.php';
+                  break;
+
+                case "education":
+                  include 'tables/senior_education_tbl.php';
+                  break;
+
+                case "religion":
+                  include 'tables/senior_religion_tbl.php';
+                  break;
+
+                case "civil_status":
+                  include 'tables/senior_civil_tbl.php';
+                  break;
+
+                default:
+                  include 'tables/senior_default_tbl.php';
+                  break;
+              }
+
+            }
+            else{
               include "tables/senior_default_tbl.php";
             }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "barangay"){
-              include "tables/senior_barangay_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "sex"){
-              include "tables/senior_sex_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "citizenship"){
-              include "tables/senior_citizenship_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == ""){
-              include "tables/senior_sex_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "age"){
-              include "tables/senior_age_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "education"){
-              include "tables/senior_education_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "religion"){
-              include "tables/senior_religion_tbl.php";
-            }
-            elseif(isset($_GET['filter']) && $_GET['filter'] == "civil"){
-              include "tables/senior_civil_tbl.php";
-            }
-            else {
-              include "tables/senior_default_tbl.php";
-            }
+
           ?>
         </div>
         <!-- Table ends here -->
@@ -69,15 +82,18 @@
         <div class="col-lg-3">
           <form action="admin_view_seniors.php" method="GET">
             <div class="form-group d-grid">
-              <select name="filter" id="" class="form-select form-select-lg">
+              <select name="filwan" id="filter1" class="form-select form-select-lg">
                 <option value="" hidden>Filter by</option>
                 <option value="barangay">Barangay</option>
                 <option value="sex">Sex</option>
-                <option value="citizenship">Citizenship</option>
                 <option value="age">Age</option>
                 <option value="education">Educational Attainment</option>
                 <option value="religion">Religion</option>
-                <option value="civil status">Civil Status</option>
+                <option value="civil_status">Civil Status</option>
+              </select>
+
+              <select name="filtu" id="filter2" class="form-select form-select-lg mt-3">
+                
               </select>
               <button class="btn btn-primary text-white fs-5 mt-2">Filter</button>
             </div>
@@ -88,6 +104,73 @@
   </body>
   <script>
     $(document).ready(function(){
+      $("#filter1").on("change", function(){
+        var filterValue = $(this).val();
+        console.log(filterValue);
+
+        $("#filter2").empty();
+
+        if(filterValue === 'barangay'){
+          addOption("#filter2", "all", "All");
+          <?php
+            $barangay_sql  = mysqli_query($conn, "SELECT * FROM barangay_tbl");
+            while($row = mysqli_fetch_assoc($barangay_sql)){
+          ?>
+          addOption("#filter2", '<?= $row['barangay_id'] ?>', '<?= $row['barangay_name'] ?>');
+          <?php
+            }
+          ?>
+        }
+        else if(filterValue === 'sex'){
+          addOption("#filter2", "all", "All");
+          addOption("#filter2", 'male', 'Male');
+          addOption("#filter2", 'female', 'Female');
+        }
+
+        else if(filterValue === 'age'){
+          addOption("#filter2", "all", "All");
+        }
+
+        else if(filterValue === 'education'){
+          addOption("#filter2", "all", "All");
+        <?php
+          $education_sql = mysqli_query($conn, "SELECT * FROM education_tbl");
+          while($row = mysqli_fetch_assoc($education_sql)){
+        ?>
+          addOption("#filter2", "<?= $row['education_id'] ?>", "<?= $row['education_attainment'] ?>");
+        <?php
+          }
+        ?>
+        }
+        
+        else if(filterValue === 'religion'){
+          addOption("#filter2", "all", "All");
+        <?php
+          $religion_sql = mysqli_query($conn, "SELECT * FROM religion_tbl");
+          while($row = mysqli_fetch_assoc($religion_sql)){
+        ?>
+          addOption("#filter2", "<?= $row['religion_id'] ?>", "<?= $row['religion_name'] ?>");
+        <?php
+          }
+        ?>
+        }
+
+        else if(filterValue === 'civil_status'){
+          addOption("#filter2", "all", "All");
+        <?php
+          $civil_sql = mysqli_query($conn, "SELECT * FROM civil_tbl");
+          while($row = mysqli_fetch_assoc($civil_sql)){
+        ?>
+          addOption("#filter2", "<?= $row['civil_id'] ?>", "<?= $row['civil_status'] ?>");
+        <?php
+          }
+        ?>
+        }
+
+        filter2Select.attr('placeholder', 'Select an option for ' + selectedValue);
+
+      });
+
       $("#deleteBtn").on("click", function(){
         let senior_id = $(this).closest("tr").find(".senior_id").text();
         console.log(senior_id);
@@ -123,8 +206,13 @@
           }
 
         ]
-      } );  
+      });  
     });
+
+    function addOption(selectElement, value, text){
+      var option = new Option(text, value, false, false);
+      $(selectElement).append(option);
+    }
     
   </script>
 </html>

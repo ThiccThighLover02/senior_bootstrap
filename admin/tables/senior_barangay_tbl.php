@@ -1,5 +1,17 @@
 <?php
-    $sql = mysqli_query($conn, "SELECT * FROM senior_tbl S INNER JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id ORDER BY barangay_name ASC");
+    $barangay = $_GET['filtu'];
+    if($barangay == "all"){
+      $sql = $conn->prepare("SELECT * FROM senior_tbl S INNER JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id ORDER BY barangay_name ASC");
+      $sql->execute();
+      $result = $sql->get_result();
+    }
+    else{
+      $sql = $conn->prepare("SELECT * FROM senior_tbl S INNER JOIN barangay_tbl B ON S.senior_barangay_id=B.barangay_id WHERE senior_barangay_id=?");
+      $sql->bind_param("i", $barangay);
+      $sql->execute();
+      $result = $sql->get_result();
+    }
+    
 ?>
 
 <table class="table table-striped table-bordered align-middle thead-dark" id="myTable">
@@ -15,7 +27,7 @@
             <tbody>
             <?php
               // this loop will iterate the rows and display the data
-              while($row = mysqli_fetch_array($sql)){
+              while($row = mysqli_fetch_assoc($result)){
               $senior_stat = "";
               // if status is active the icon will be color green
               if($row['status'] == "Active"){

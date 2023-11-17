@@ -40,9 +40,6 @@
               <button class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Admin</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="user-tab" data-bs-toggle="tab" data-bs-target="#user-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">User</button>
-            </li>
-            <li class="nav-item" role="presentation">
               <button class="nav-link" id="senior-tab" data-bs-toggle="tab" data-bs-target="#senior-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Senior</button>
             </li>
           </ul>
@@ -78,37 +75,6 @@
             </table>
           </div>
           <!-- Admin Tab Pane End -->
-
-          
-          <!-- User Tab Start -->
-          <div class="tab-pane fade" id="user-tab-pane" role="tabpanel" aria-labelledby="user-tab" tabindex="0">
-          <table class="table table-striped table-bordered align-middle thead-dark" id="myTable">
-            <thead>
-              <tr>
-                <th>By</th>
-                <th>Action</th>
-                <th>Action Date</th>
-                <th>Action Time</th>
-              </tr>
-            </thead>
-            <tbody>
-            <?php
-              $emp_sql = mysqli_query($conn, "SELECT * FROM event_log E RIGHT JOIN action_tbl A ON E.action_id=A.action_id RIGHT JOIN emp_tbl Em ON E.act_emp_id=Em.emp_id WHERE act_emp_id IS NOT NULL");
-              while($emp_row = mysqli_fetch_assoc($emp_sql)){
-            ?>
-              <tr>
-                <td><?= $emp_row['full_name'] ?></td>
-                <td><?= $emp_row['action_done'] ?></td>
-                <td><?= $emp_row['act_date'] ?></td>
-                <td><?= $emp_row['act_time'] ?></td>
-              </tr>
-            <?php
-              }
-            ?>
-            </tbody>
-            </table>
-          </div>
-          <!-- User Tab End -->
 
           <!-- Senior Tab Start -->
           <div class="tab-pane fade" id="senior-tab-pane" role="tabpanel" aria-labelledby="user-tab" tabindex="0">
