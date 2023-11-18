@@ -75,3 +75,7 @@ form, label{
 .blood-type{
     grid-column: 1/3;
 }
+
+.physical {
+    grid-column: 3/5;
+}

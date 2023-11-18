@@ -1,16 +1,3 @@
-<?php
-  session_start();
-  if(isset($_SESSION['senior_status']) && $_SESSION['senior_status'] == "Active"){
-    $home = "senior/senior_home.php";
-  }
-  elseif (isset($_SESSION['admin_status']) && $_SESSION['admin_status'] == "Active"){
-    $home = "admin/admin_home.php";
-  }
-
-  else{
-    $home = "index.php";
-  }
-?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light nav-header">
     <div class="container-fluid">

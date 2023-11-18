@@ -75,9 +75,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-lg-4">
-                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 edit-post"></i>
-                  </div>
                 </div>
                 <!-- Post header ends here -->
                 <!-- Post Description -->

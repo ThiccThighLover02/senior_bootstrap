@@ -132,7 +132,9 @@
               <div class="row">
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Password:</h3>
-                    <input type="password" class="form-control" placholder="" value="<?= $row['senior_password'] ?>">
+                    <input type="password" id="pass_word" class="form-control" placholder="" value="<?= $row['senior_password'] ?>">
+                    <input type="button" class="btn btn-primary text-white mt-3" value="Show password" onclick=show_pass()>
+
                 </div>
                 <div class="col-lg-6 d-flex flex-column">
                 <h2 class="text-primary">Account Created:</h3>
@@ -243,6 +245,17 @@
       });
       
     });
+
+    // this is to show the password of the senior
+    function show_pass() {
+      var x = document.getElementById("pass_word");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+
     // This is for the printing ID function
     function printExternal(url) {
     var printWindow = window.open(url, 'Print', 'left=200, top=200, width=1600, height=900, toolbar=800, resizable=0');

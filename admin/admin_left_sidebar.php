@@ -7,6 +7,9 @@
     <div class="offcanvas-lg offcanvas-start"  id="sideDiv">
         <ul class="nav nav-pills flex-column gap-3 side_menu_left">
           <li class="nav-item">
+            <a class="nav-link <?= $active === "actReturn" ? "active":""; ?> fs-5" aria-current="page" href="../index.php"><i class="fa-solid fa-home fa-lg"></i> Home</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link <?= $active === "actHome" ? "active":""; ?> fs-5" aria-current="page" href="admin_home.php"><i class="fa-solid fa-home fa-lg"></i> Home</a>
           </li>
           <li class="nav-item">

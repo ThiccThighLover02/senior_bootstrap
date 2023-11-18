@@ -6,7 +6,7 @@
     if(isset($_SESSION['admin_status']) && $_SESSION['admin_status'] == "Active"){
         $event_id = $_GET['id'];
         $date = date("Y-m-d");
-        $attend_senior = $conn->prepare("SELECT * FROM attend_tbl WHERE activity_id=?");
+        $attend_senior = $conn->prepare("SELECT * FROM attend_tbl A INNER JOIN senior_tbl S ON A.senior_attend=S.senior_id WHERE activity_id=?");
         $attend_senior->bind_param("i", $event_id);
         $attend_senior->execute();
         $attend_result = $attend_senior->get_result();
@@ -20,6 +20,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #container {
+            display: none;
+        }
+    </style>
     <?php
         include "admin_links.php";
     ?>
@@ -33,14 +38,44 @@
       <div class="row gx-5 pt-3" id="navbarSupportedContent">
         <?php
           // this active variable shows the active tab in the side bar
-          $active = "actEvent";
+          $active = "actActivities";
           include "admin_left_sidebar.php";  
         ?>
 
         <!-- Table Starts here -->
         <div class="col-lg-7 p-3">
-         
-            <div class="row d-flex gap-2">
+            <div id="container">
+                <table class="table table-striped table-bordered align-middle thead-dark" id="example" >
+                    <thead>
+                        <tr>
+                            <th>Senior No.</th>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Extension</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                        while($row = mysqli_fetch_assoc($attend_result)){
+                    ?>
+                        <tr>
+                            <td><?= $row['senior_id'] ?></td>
+                            <td><?= $row['first_name'] ?></td>
+                            <td><?= $row['mid_name'] ?></td>
+                            <td><?= $row['last_name'] ?></td>
+                            <td><?= $row['extension'] ?></td>
+                            <td><?= $row['senior_purok_id'] ?></td>
+                        </tr>
+                    <?php
+                        }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="" id="graph-contain">
+                <div class="row d-flex gap-2" id="graph" style="display: none">
                 <div class="col-lg-5 bg-white rounded-4 shadow p-3 d-flex flex-column align-items-start" style="height: 20vh" id="senior-attend">
                     <h3 class="text-primary">No. of seniors attended</h3>
                     <p class="fs-2"><?= $attend_rows ?></p>
@@ -56,16 +91,21 @@
                     <h3 class="text-primary">Absent</h3>
                     <p class="fs-2"><?= $absent_seniors ?></p>
                 </div>
-            </div>
-            <div class="row">
+                </div>
+                <div class="row">
                 <canvas id="myChart"></canvas>
+                </div>
             </div>
+            
         </div>
 
         <div class="col-lg-3 p-3">
             <div class="row">
-                <div class="col-lg-12 bg-white">
-                    <h1>Event Details</h1>
+                <div class="col-lg-12 d-grid">
+                    <button id="showTable" class="btn btn-info mb-3">Show Table</button>
+                    <button id="showGraph" class="btn btn-info mb-3">Show Graph</button>
+                    <button id="exportButton" class="btn btn-info mb-3">Download Attendance</button>
+                    <a href="admin_activities.php"  class="btn btn-success text-white">Return to Calendar</a>
                 </div>
             </div>
         </div>
@@ -105,36 +145,32 @@
         //   window.location.href = "admin_delete_senior.php?id=" . senior_id; 
         // }
       });
-      // this uses the datatables
-      $('#myTable').DataTable( {
-        dom: '<"d-flex flex-between"<"col"B><"col"f>>t<"d-flex flex-between"<"col"l><"col"p>><"clear">',
-        buttons: [
-          // This is for the Excel button
-          {
-            text: '<i class="fa-solid fa-download"></i>Download Excel',
-            action: function(){
-              window.location.href="../excel.php";
-            },
-            className: 'btn btn-info text-white btn-block rounded'
-          },
-        {
-          extend: "spacer"
-        },
-        {
-          extend: "spacer"
-        },
-          //This is for the add senior
-          {
-            text: '<i class="fa-solid fa-user-plus"></i>Add Senior',
-            action: function(){
-              window.location.href = "admin_create_senior.php";
-            },
-            className: "btn btn-info text-white btn-block rounded"
-          }
 
-        ]
-      } );  
+      $("#showTable").on("click", function(){
+        console.log("you want to show the table?");
+        $("#container").css({
+            "display": "block"
+        })
+        $("#graph-contain").css({
+            "display": "none"
+        });
+      });
+      // this uses the datatables
+
+    var table = $('#example').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'excel'
+        ],
+        initComplete: function () {
+            // Trigger Excel export programmatically
+            $('#exportButton').click(function() {
+                table.buttons(0).trigger();
+            });
+        },
     });
+    $(".buttons-excel").css("display", "none");
+  });
     
   </script>
 </html>
