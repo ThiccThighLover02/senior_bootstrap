@@ -208,12 +208,12 @@
                             <label for="">Chronic kidney diesease</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input mb-3" value="Alzheimer" name="health[]">
+                            <input type="checkbox" class="form-check-input mb-3" value="Alzheimer/Dementia" name="health[]">
                             <label for="">Alzheimer's/Dementia</label>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input mb-3" value="Chronic Obstructive Pulmonary diesease" name="health[]">
-                            <label for="">Chronic Obstructuve Pulmonary disease</label>
+                            <label for="">Chronic Obstructive Pulmonary disease</label>
                         </div>
                         <input type="text" class="form-control form-control-lg mb-3" name="other_health" placeholder="Others(please specify leave blank if none)">
                         </div>
@@ -252,12 +252,18 @@
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Contact Number -->
-                            <input type="text" class="form-control form-control-lg" name="cell_no" id="" placeholder="Contact Number" required>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">+63</span>
+                                <input type="text" class="form-control form-control-lg" name="cell_no" id="" placeholder="Contact Number" required>
+                            </div>
                             <label for="" class="invalid-feedback mb-1">Require</label>
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Emergency Contact -->
-                            <input type="text" class="form-control form-control-lg" name="emergency_no" id="" placeholder="Guardians's Contact Number" required>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">+63</span>
+                                <input type="text" class="form-control form-control-lg" name="emergency_no" id="" placeholder="Guardians's Contact Number" required>
+                            </div>
                             <label for="" class="invalid-feedback mb-1">Require</label>
                         </div>
                         

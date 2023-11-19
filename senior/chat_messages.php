@@ -2,7 +2,7 @@
     date_default_timezone_set("Asia/Manila");
     session_start();
     include '../db_connect.php';
-    if(isset($_SESSION['admin_status']) && $_SESSION['admin_status'] == "Active"){
+    if(isset($_SESSION['senior_status']) && $_SESSION['senior_status'] == "Active"){
 
         
         $incoming_id = mysqli_real_escape_string($conn, $_POST['incoming']);
@@ -14,8 +14,8 @@
                 if($row['outgoing_id'] === $outgoing_id){
 ?>
     <div class="row d-flex justify-content-end">
-        <div class="col-6">
-            <p class="bg-primary rounded-4 p-2 text-white"><?= $row['messages'] ?></p>
+        <div class="col-6 d-flex justify-content-end">
+            <p class="bg-primary rounded-4 p-2 text-white" style="width:fit-content;"><?= $row['messages'] ?></p>
         </div>
     </div>
 <?php
@@ -24,7 +24,7 @@
 ?>
     <div class="row">
         <div class="col-6">
-            <p class="bg-info rounded-4 p-2 text-white"><?= $row['messages'] ?></p>
+            <p class="bg-info rounded-4 p-2 text-white" style="width: fit-content;"><?= $row['messages'] ?></p>
         </div>
     </div>
 <?php

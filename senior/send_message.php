@@ -2,12 +2,12 @@
     date_default_timezone_set("Asia/Manila");
     session_start();
     include '../db_connect.php';
-    if(isset($_SESSION['admin_status']) && $_SESSION['admin_status'] == "Active"){
+    if(isset($_SESSION['senior_status']) && $_SESSION['senior_status'] == "Active"){
 
         
-        $incoming_id = mysqli_real_escape_string($conn, $_POST['incoming']);
-        $outgoing_id = mysqli_real_escape_string($conn, $_POST['outgoing']);
-        $message = mysqli_real_escape_string($conn, $_POST['input-field']);
+        $incoming_id = $_POST['incoming'];
+        $outgoing_id = $_POST['outgoing'];
+        $message = $_POST['input-field'];
         $date = date("Y-m-d");
         $time = date("H:i:s");
 

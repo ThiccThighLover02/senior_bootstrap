@@ -169,8 +169,9 @@
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 lazy-modal" data-toggle="modal" data-target="#myModal<?= $row['post_id'] ?>" style="cursor: pointer;"></i>
-
+                    <div class="edit-post" data-toggle="modal" data-target="#myModal">
+                      <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 lazy-modal"  style="cursor: pointer;"></i>
+                    </div>
                   </div>
                 </div>
                 <!-- Post header ends here -->
@@ -202,6 +203,7 @@
       </div>
     </div>
   </body>
+  <script src="inactive.js"></script>
   <script>
     $(document).ready(function(){
       $('#myTable').DataTable( {
@@ -237,6 +239,10 @@
       $(".create-post").on("click" function(e){
         $("#exampleModal").modal("show");
       })
+
+      $(".edit-post").on("click", function(e)){
+        console.log("You want to edit this post?");
+      }
 
       $("#post-id").click(function(e){
         let post_id = $(this).closest("row").find(".post-id").text();

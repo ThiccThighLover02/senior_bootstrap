@@ -17,7 +17,7 @@
         include "admin_links.php";
 
         //   Get the data from the request_tbl
-        $sql = $conn->prepare("SELECT * FROM request_tbl R  RIGHT JOIN purok_tbl P ON R.purok_id=P.purok_id RIGHT JOIN barangay_tbl B ON R.barangay_id=B.barangay_id RIGHT JOIN municipality_tbl M ON R.municipality_id=M.municipality_id RIGHT JOIN province_tbl Pr ON R.province_id=Pr.province_id INNER JOIN education_tbl E ON R.request_education_id=E.education_id INNER JOIN civil_tbl Cl ON R.request_civil_id=Cl.civil_id INNER JOIN religion_tbl Rl ON R.request_religion_id=Rl.religion_id WHERE request_id=?");
+        $sql = $conn->prepare("SELECT * FROM request_tbl R  RIGHT JOIN purok_tbl P ON R.purok_id=P.purok_id RIGHT JOIN barangay_tbl B ON R.barangay_id=B.barangay_id RIGHT JOIN municipality_tbl M ON R.municipality_id=M.municipality_id RIGHT JOIN province_tbl Pr ON R.province_id=Pr.province_id INNER JOIN education_tbl E ON R.request_education_id=E.education_id INNER JOIN civil_tbl Cl ON R.request_civil_id=Cl.civil_id INNER JOIN religion_tbl Rl ON R.request_religion_id=Rl.religion_id INNER JOIN blood_tbl Bl ON R.blood_id=Bl.blood_id WHERE request_id=?");
         $sql->bind_param("i", $request_id);
         $sql->execute();
         $sql_result = $sql->get_result();
@@ -195,7 +195,7 @@
                 <div class="col-lg-6 d-flex flex-column">
 
                     <h2 class="text-primary">Blood Type:</h3>
-                    <p class="fs-5"><?= str_pad($row['cell_no'], 13, "+63", STR_PAD_LEFT) ?></p>
+                    <p class="fs-5"><?= $row['blood_type'] ?></p>
                 </div>
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Physical Disability:</h3>
@@ -213,15 +213,17 @@
               <div class="row">
                 <div class="col-lg-6 d-flex flex-column">
                     <h2 class="text-primary">Health Conditions:</h3>
+                    <ul>
                     <?php
                       foreach($health as $condition => $value){
                         if($value == true){
                     ?>
-                        <p class="fs-5"><?= $condition ?></p>
+                        <li class="fs-5"><?= $condition ?></li>
                     <?php
                         }
                       }
                     ?>
+                    </ul>
                 </div>
               </div>
             </div>

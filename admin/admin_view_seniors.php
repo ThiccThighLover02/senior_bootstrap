@@ -233,6 +233,8 @@
   </body>
   <script>
     $(document).ready(function(){
+
+      // Filter javascript starts here
       $("#filter1").on("change", function(){
         var filterValue = $(this).val();
         console.log(filterValue);
@@ -303,6 +305,7 @@
         filter2Select.attr('placeholder', 'Select an option for ' + selectedValue);
 
       });
+      // Filter javascript ends here
 
       $("#deleteBtn").on("click", function(){
         let senior_id = $(this).closest("tr").find(".senior_id").text();

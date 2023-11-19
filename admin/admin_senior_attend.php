@@ -19,17 +19,21 @@
         $attend_result = $attend_sql->get_result();
         $attend_rows = mysqli_num_rows($attend_result);
 
-
-        if($attend_rows == 0){
-            $insert_sql = $conn->prepare("INSERT INTO `attend_tbl`(`activity_id`, `senior_attend`, `senior_barangay`, `attend_date`, `attend_time`) VALUES (?, ?, ?, ?, ?)");
-            $insert_sql->bind_param("iiiss", $event_id, $row['senior_id'], $row['senior_barangay_id'], $date, $time);
-            $insert_sql->execute();
-
-            header("Location: admin_event_scan.php?event_id=" . $event_id . "&scan=true&attended=true");
+        if(!is_null($row['senior_id'])){
+            if($attend_rows == 0){
+                $insert_sql = $conn->prepare("INSERT INTO `attend_tbl`(`activity_id`, `senior_attend`, `senior_barangay`, `attend_date`, `attend_time`) VALUES (?, ?, ?, ?, ?)");
+                $insert_sql->bind_param("iiiss", $event_id, $row['senior_id'], $row['senior_barangay_id'], $date, $time);
+                $insert_sql->execute();
+    
+                header("Location: admin_event_scan.php?event_id=" . $event_id . "&scan=true&attended=true");
+            }
+    
+            else{
+                header("Location: admin_event_scan.php?event_id=" . $event_id . "&scan=true&exist=true");
+            }
         }
-
         else{
-            header("Location: admin_event_scan.php?event_id=" . $event_id . "&scan=true&exist=true");
+            header("Location:admin_event_scan.php?event_id=" . $event_id . "&scan=true&exist=true");
         }
     }
 ?>
