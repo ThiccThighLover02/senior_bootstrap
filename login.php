@@ -1,11 +1,11 @@
 <?php
   session_start();
-  if(isset($_SESSION['admin_status'])){
-    header("Location: admin/admin_home.php");
-  }
-  elseif(isset($_SESSION['senior_status'])){
-    header("Location: senior/senior_home.php");
-  }
+  // if(isset($_SESSION['admin_status'])){
+  //   header("Location: admin/admin_home.php");
+  // }
+  // elseif(isset($_SESSION['senior_status'])){
+  //   header("Location: senior/senior_home.php");
+  // }
 ?>
 <!DOCTYPE html>
 <html lang="en">

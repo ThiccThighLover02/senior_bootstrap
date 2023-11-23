@@ -179,9 +179,12 @@
   }
 
   else {
-    $sql = mysqli_query($conn, "SELECT * FROM senior_tbl WHERE full_name='$full_name'");
+    $sql = $conn->prepare("SELECT * FROM senior_tbl WHERE full_name=? OR senior_email=? OR cell_no=? OR emergency_no=?");
+    $sql->bind_param("ssii", $full_name, $email, $cellno, $emergency_no);
+    $sql->execute();
+    $result = $sql->get_result();
 
-    if(mysqli_num_rows($sql) > 0){
+    if(mysqli_num_rows($result) > 0){
       header("Location: senior_create_acc.php?exist=true");
     }
 

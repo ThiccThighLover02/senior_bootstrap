@@ -141,6 +141,97 @@
                 $post_pic = "";
             ?>
             <div class="row mb-5">
+                      <!-- Modal starts here -->
+              <div class="modal fade" id="edit-modal<?= $row['post_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Post</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="admin_post.php?post=edit&id=<?= $row['post_id'] ?>" method="post" enctype="multipart/form-data">
+                      <div class="form-group d-flex flex-column">
+                            <h4>Post Title</h4>
+                            <div class="col-12 mb-3">
+                                <!-- Date of Event -->
+                                <input type="text" class="form-control form-control-lg" id="" name="post_title" value="<?= $row['post_title'] ?>" placeholder="Post Title" required>
+                            </div>
+                            <!-- Post Type -->
+                            <h4>Post Type</h4>
+                            <div class="col-12 mb-3">
+                              <select class="form-select form-select-lg" name="post_type" id="">
+                              <?php
+                                if($row['post_type'] == "announcement"){
+                                  $announce_select = "selected";
+                                  $event_select = "";
+                                }
+                                elseif($row['post_type'] == "event"){
+                                  $announce_select = "";
+                                  $event_select = "selected";
+                                }
+                              ?>
+                                <option value="" hidden>Post type</option>
+                                <option value="announcement" <?= $announce_select ?>>Announcement</option>
+                                <option value="event"<?= $event_select ?>>Event</option>
+                              </select>
+                            </div>
+
+                            <!-- Event Description -->
+                            <h4>Event Description:</h4>
+                            <div class="col-12 mb-3">
+                              <textarea class="form-control" name="description" id="" cols="30" rows="10" placeholder="Enter the type description here, please include the requirements for the said event" value="<?= $row['post_description'] ?>"></textarea>
+                            </div>
+                            <h4>Date of Event:</h4>
+                            <div class="col-12 mb-3">
+                                <!-- Date of Event -->
+                                <input type="date" class="form-control form-control-lg" id="" name="act_date" value="<?= $row['post_date'] ?>" required>
+                            </div>
+
+                            <h4>Time Start:</h4>
+                            <?php
+                              $isoDateString = $row['time_start'];
+                              $dateTime = new DateTime($isoDateString);
+                              
+                              // Format the time
+                              $formattedTimeStart = $dateTime->format('H:i');
+                            ?>
+                            <div class="col-12 mb-3">
+                                <!-- time Start -->
+                                <input type="time" class="form-control form-control-lg" id="" name="time_start" value="<?= $formattedTimeStart ?>" required>
+                            </div>
+
+                            <h4>Time End:</h4>
+                            <?php
+                              $isoDateString = $row['time_end'];
+                              $dateTime = new DateTime($isoDateString);
+                              
+                              // Format the time
+                              $formattedTimeEnd = $dateTime->format('H:i');
+                            ?>
+                            <div class="col-12 mb-3">
+                                <!-- Time End -->
+                                <input type="time" class="form-control form-control-lg" id="" name="time_end" value="<?= $formattedTimeEnd ?>" required>
+                            </div>
+
+                            <h4>Location:</h4>
+                            <div class="col-12 mb-3">
+                                <!-- Location -->
+                                <input type="text" class="form-control form-control-lg" id="" name="event_location" placeholder="Location" value="<?= $row['post_loc'] ?>" required>
+                                <div class="invalid-feedback mb-1">
+                                  Require
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3 d-grid">
+                              <button class="btn btn-primary text-white mb-3">Update Post</button>
+                              <a href="admin_post.php?post=delete&id=<?= $row['post_id']?>" class="btn btn-danger text-white">Delete Post</a>
+                            </div>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="col-lg-12 shadow bg-white rounded">
                 <!-- Post header -->
                 <div class="row post-id" value="<?= $row['post_id'] ?>">
@@ -169,7 +260,7 @@
                     </div>
                   </div>
                   <div class="col-lg-4">
-                    <div class="edit-post" data-toggle="modal" data-target="#myModal">
+                    <div class="edit-post" data-bs-toggle="modal" data-bs-target="#edit-modal<?= $row['post_id'] ?>">
                       <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4 lazy-modal"  style="cursor: pointer;"></i>
                     </div>
                   </div>
@@ -193,11 +284,6 @@
             }
             ?>
 
-          </div>
-        </div>
-        <div class="col-lg-3" style="height: 50vh;">
-          <div class="row">
-            <h3 class="text-center bg-primary">Upcoming Events</h3>
           </div>
         </div>
       </div>

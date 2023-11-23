@@ -34,7 +34,7 @@
 
           $sql_rows = mysqli_num_rows($online);
         ?>
-        <div class="col-lg-6 rounded mb-2 overflow-y-scroll me-2" style="height: 85vh">
+        <div class="col-lg-8 rounded mb-2 overflow-y-scroll me-2" style="height: 85vh">
           <div class="container-fluid">
             <?php
               $post_sql = mysqli_query($conn, "SELECT * FROM activity_tbl A LEFT JOIN admin_tbl Ad ON A.post_admin_id=Ad.admin_id LEFT JOIN emp_tbl E ON A.post_emp_id=E.emp_id ORDER BY date_created DESC, time_created DESC");
@@ -100,11 +100,6 @@
         <?php
 
         ?>
-        <div class="col-lg-2 bg-white" style="height: 50vh;">
-          <div class="row bg-primary">
-            <h3 class="text-center">Upcoming Events</h3>
-          </div>
-        </div>
       </div>
     </div>
   </body>

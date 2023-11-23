@@ -307,13 +307,6 @@
       });
       // Filter javascript ends here
 
-      $("#deleteBtn").on("click", function(){
-        let senior_id = $(this).closest("tr").find(".senior_id").text();
-        console.log(senior_id);
-        // if(confirm("Do you want to delete this account?" . senior_id) == true){
-        //   window.location.href = "admin_delete_senior.php?id=" . senior_id; 
-        // }
-      });
       // this uses the datatables
       $('#myTable').DataTable( {
         dom: '<"d-flex flex-between"<"col"B><"col"f>>t<"d-flex flex-between"<"col"l><"col"i><"col"p>><"clear">',
@@ -336,6 +329,9 @@
           {
             text: '<i class="fa-solid fa-file-pdf"></i>PDF',
             extend: 'pdf',
+            exportOptions: {
+                    columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], // Specify the columns to include in the Excel export (exclude column 1)
+                },
             customize: function (doc) {
                     // Adjust the styles to make the table fit in the PDF
                     doc.styles.tableHeader.fontSize = 5;

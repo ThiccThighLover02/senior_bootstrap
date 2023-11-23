@@ -175,39 +175,66 @@
     
     $random = random_int(1000, 9999);
     
-    $first_name = $_POST['first_name'];
-    $middle_name = $_POST['middle_name'];
-    $last_name = $_POST['last_name'];
-    $extension = $_POST['extension'];
-    $message_id = hexdec(uniqid());
-    $full_name = $first_name . " " . $middle_name . " " . $last_name;
-    $birth_date = $_POST['date_birth'];
-    $birth_place = $_POST['place_birth'];
-    $sex = $_POST['sex'];
-    $civil_stat = $_POST['civil_status'];
-    $religion = $_POST['religion'];
-    $blood_id = $_POST['blood_type'];
+    //    Full Name 
+   $firstN = $_POST['first_name'];
+   $midN = $_POST['middle_name'];
+   $lastN = $_POST['last_name'];
+   $extension = $_POST['extension'];
+   $full_name = $firstN . " " . $midN . " " . $lastN;
+   $message_id = hexdec(uniqid());
+//    Address
+   $purok = $_POST['purok'];
+   $barangay = $_POST['barangay'];
+   $municipality = $_POST['municipality'];
+   $province = $_POST['province'];
+//    Birth Information
+   $birth_date = $_POST['birth_date'];
+   $birth_place = $_POST['birth_place'];
+   $citizen = $_POST['citizenship'];
+   $sex = $_POST['sex'];
+//    Health Related Information
+   $blood_id = $_POST['blood_type'];
+   if($_POST['physical_disability'] == ""){
+    $physical_disability = "No physical disability";
+   }
+   else{
     $physical_disability = $_POST['physical_disability'];
-    $health_check = $_POST['health'];
-    $health_array = serialize($health_check);
-    $other_health = $_POST['other_health'];
-    $education = $_POST['education'];
-    $citizenship = $_POST['citizenship'];
-    $cell_no = $_POST['cell_no'];
-    $emergency_no = $_POST['emergency_no'];
-    $purok = $_POST['purok'];
-    $barangay = $_POST['barangay'];
-    $municipality = $_POST['municipality'];
-    $province = $_POST['province'];
-    $email = $_POST['email'];
-    $password = date("Y-") . random_int(1000, 9999);
-    $data_password = password_hash($password, PASSWORD_DEFAULT);
-    $account_date = date("Y-m-d");
-    $account_time = date("H:i:s");
+   }
+   #create an array for the check conditions
+   $health_array = array(
+    "Hypertension" => false,
+    "Arthritis/Gout" => false,
+    "Coronary heart disease" => false,
+    "Diabetes" => false,
+    "Chronic kidney disease" => false,
+    "Alzheimer/Dementia" => false,
+    "Chronic Obstructive Pulmonary disease" => false,
+   );
+   if(isset($_POST['health']) && is_array($_POST['health'])){
+    foreach ($_POST['health'] as $selectedCondition) {
+      // Use the selected condition as the key to update the array value to true
+      $health_array[$selectedCondition] = true;
+    }
+   }
+   $check_conditions = serialize($health_array); 
+//    Highest Educational Attainment
+   $education = $_POST['education'];
+//    Contact Information
+   $email = $_POST['email'];
+   $password = date('Y-') . $random;
+   $cell_no = $_POST['cell_no'];
+   $emergency_no = $_POST['emergency_no'];
+
+//    Other Information
+   $civil_stat = $_POST['civil_status'];
+   $religion = $_POST['religion'];
+   
+   $account_date = date("Y-m-d");
+   $account_time = date("H:i:s");
     $status = "Inactive";
    
     #this will compute the seniors age
-    $birthday = $_POST['date_birth'];
+    $birthday = $_POST['birth_date'];
 
     $birthday = new DateTime($birthday);
     $interval = $birthday->diff(new DateTime);
@@ -256,7 +283,7 @@
 
         if(in_array($img_ex_lc, $allowed_exs)) {
           date_default_timezone_set("Asia/Manila");
-          $new_id_name =$first_name . "_" . $middle_name . "_" . $last_name . "id_pic" . "." . $img_ex_lc;
+          $new_id_name =$firstN . "_" . $midN . "_" . $lastN . "id_pic" . "." . $img_ex_lc;
           $img_upload_path = '../senior/senior_pics/id_pics/' . $new_id_name;
           move_uploaded_file($id_tmp_name, $img_upload_path);
             
@@ -286,7 +313,7 @@ if($birth_error === 0){
 
      if(in_array($img_ex_lc, $allowed_exs)) {
        date_default_timezone_set("Asia/Manila");
-       $new_birth_name =$first_name . "_" . $middle_name . "_" . $last_name . "birth_cert" . "." . $img_ex_lc;
+       $new_birth_name =$firstN . "_" . $midN . "_" . $lastN . "birth_cert" . "." . $img_ex_lc;
        $img_upload_path = '../senior/senior_pics/birth_certificates/' . $new_birth_name;
        move_uploaded_file($birth_temp_name, $img_upload_path);
          
@@ -316,8 +343,8 @@ if($bar_error === 0){
 
      if(in_array($img_ex_lc, $allowed_exs)) {
        date_default_timezone_set("Asia/Manila");
-       $new_bar_name =$first_name . "_" . $middle_name . "_" . $last_name . "bar_cert" . "." . $img_ex_lc;
-       $img_upload_path = '../user/requests/bar_certificate/' . $new_birth_name;
+       $new_bar_name =$firstN . "_" . $midN . "_" . $lastN . "bar_cert" . "." . $img_ex_lc;
+       $img_upload_path = '../senior/senior_pics/bar_certificates/' . $new_bar_name;
        move_uploaded_file($bar_temp_name, $img_upload_path);
          
          
@@ -336,15 +363,40 @@ $status = "Inactive";
 
 
 
-$stmt = $conn->prepare("INSERT INTO `senior_tbl`(`status`, `full_name`, `first_name`, `mid_name`, `last_name`, `extension`, `message_id`, `senior_purok_id`, `senior_barangay_id`, `senior_municipality_id`, `senior_province_id`, `date_birth`, `birth_place`, `sex`, `citizenship`, `age`, `blood_id`, `physical_disability`, `health`, `other_health`, `education`, `cell_no`, `emergency_no`, `religion`, `civil_status`, `senior_email`, `senior_password`, `qr_image`, `id_pic`, `birth_certificate`, `bar_certificate`, `qr_contents`, `account_time`, `account_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"); 
-$stmt->bind_param("ssssssiiiiissssiissssiisssssssssss", $status, $full_name, $first_name, $middle_name, $last_name, $extension, $message_id, $purok, $barangay, $municipality, $province, $birth_date, $birth_place, $sex, $citizenship, $age, $blood_id, $physical_disability, $health_array, $other_health, $education, $cell_no, $emergency_no, $religion, $civil_stat, $email, $password, $fileName, $new_id_name, $new_birth_name, $new_bar_name, $codeContents, $account_time, $account_date);
+$stmt = $conn->prepare("INSERT INTO `senior_tbl`(`status`, `full_name`, `first_name`, `mid_name`, `last_name`, `extension`, `message_id`, `senior_purok_id`, `senior_barangay_id`, `senior_municipality_id`, `senior_province_id`, `date_birth`, `birth_place`, `sex`, `citizenship`, `age`, `blood_id`, `physical_disability`, `health`, `other_health`, `education_id`, `cell_no`, `emergency_no`, `religion_id`, `civil_id`, `senior_email`, `senior_password`, `qr_image`, `id_pic`, `birth_certificate`, `bar_certificate`, `qr_contents`, `account_time`, `account_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"); 
+$stmt->bind_param("ssssssiiiiissssiisssiiiiisssssssss", $status, $full_name, $firstN, $midN, $lastN, $extension, $message_id, $purok, $barangay, $municipality, $province, $birth_date, $birth_place, $sex, $citizen, $age, $blood_id, $physical_disability, $check_conditions, $other_health, $education, $cell_no, $emergency_no, $religion, $civil_stat, $email, $password, $fileName, $new_id_name, $new_birth_name, $new_bar_name, $codeContents, $account_time, $account_date);
 $stmt->execute();
 
 $event_log = $conn->prepare("INSERT INTO `senior_system`.`event_log` (`act_admin_id`,`action_id`, `act_date`, `act_time`) VALUES (?, ?, ?, ?);");
 $event_log->bind_param("iiss", $_SESSION['admin_id'], $add, $add_date, $add_time);
 $event_log->execute();
 
-header("Location: admin_view_senior.php?add_senior=true");
+$subject = "Account Approval";
+    $message = "Hello " . $first_name . " " . $last_name . ", an account has been created with your name and email. <br> You may proceed to the senior login page and enter the following credentials:<br>
+
+    <h1>" . "Email: " . $email . "</h1> <br>
+    <h1>" . "Password: " . $password . "</h1>";
+
+    $mail = new PHPMailer(true);
+
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'seniorcitizensystem@gmail.com';
+    $mail->Password = 'qkjtmhbkbuqnixdj';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
+
+    $mail->setFrom('seniorcitizensystem@gmail.com');
+    $mail->addAddress($email);
+    $mail->isHTML(true);
+
+    $mail->Subject = $subject;
+    $mail->Body = $message;
+
+    $mail->send();
+
+header("Location: admin_view_seniors.php?add_senior=true");
 
 }
 ?>

@@ -15,7 +15,7 @@
 ?>
     <div class="row d-flex justify-content-end">
         <div class="col-6 d-flex justify-content-end">
-            <p class="bg-primary rounded-4 p-2 text-white" style="width:fit-content;"><?= $row['messages'] ?></p>
+            <p class="bg-primary rounded-4 p-2 text-white" style="width:fit-content; height: fit-content;"><?= $row['messages'] ?></p>
         </div>
     </div>
 <?php
@@ -24,7 +24,7 @@
 ?>
     <div class="row">
         <div class="col-6">
-            <p class="bg-info rounded-4 p-2 text-white" style="width: fit-content;"><?= $row['messages'] ?></p>
+            <p class="bg-info rounded-4 p-2 text-white" style="width: fit-content; height:fit-content;"><?= $row['messages'] ?></p>
         </div>
     </div>
 <?php

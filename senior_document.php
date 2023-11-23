@@ -1,6 +1,5 @@
 <?php
     session_start();
-    if(isset($_SESSION['admin_status']) && $_SESSION['admin_status'] == "Active"){
         include 'db_connect.php';
         #get the senior id
         $senior_id = $_GET['id'];
@@ -153,7 +152,3 @@
     </div>
 </body>
 </html>
-
-<?php
-    }
-?>

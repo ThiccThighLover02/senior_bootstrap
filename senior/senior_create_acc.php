@@ -25,7 +25,7 @@
     <?php
         include "senior_navbar.php";
     ?>
-        <nav class="nav collapse navbar-collapse fs-4 d-flex gap-5 next-nav d-flex justify-content-end" id="nav-buttons">
+        <nav class="nav offcanvas-lg offcanvas-end fs-4 d-flex gap-5 next-nav d-flex justify-content-end" id="nav-buttons">
         <a class="nav-link text-white active" aria-current="page" href="../index.php">Home</a>
         <a class="nav-link text-white" href="../about.php">About Us</a>
         <a class="nav-link text-white" href="../faq.php">FAQ</a>
@@ -54,31 +54,25 @@
                         <h4>Full Name:</h4>
                         <div class="col-12 mb-3">
                             <!-- First Name -->
-                            <input type="text" class="form-control form-control-lg" id="" name="first_name" placeholder="First Name" pattern=".{2,}" required>
-                            <div class="valid-feedback mb-3">
-                            Looks good!
-                            </div>
-                            <div class="invalid-feedback mb-1">
-                            Require
-                            </div>
+                            <input type="text" class="form-control form-control-lg" id="first" name="first_name" placeholder="First Name" pattern=".{2,}" oninput="validateInput(this, 'text')" required>
+                            <div class="invalid-feedback mb-1" id="firstFeedback"></div>
                         </div>
 
                         <div class="col-12 mb-3">
                             <!-- Middle Name -->
-                            <input type="text" class="form-control form-control-lg" id="" name="middle_name" placeholder="Middle Name">
+                            <input type="text" class="form-control form-control-lg" id="mid" name="middle_name" placeholder="Middle Name" pattern=".{2,}" oninput="validateInput(this, 'text')">
+                            <div class="invalid-feedback mb-1" id="midFeedback"></div>
                         </div>
 
                         <div class="col-12 mb-3">
                             <!-- Last Name -->
-                            <input type="text" class="form-control form-control-lg" id="" name="last_name" placeholder="Last Name" required>
-                            <div class="invalid-feedback mb-1">
-                            Require
-                            </div>
+                            <input type="text" class="form-control form-control-lg" id="last" name="last_name" placeholder="Last Name" pattern=".{2,}" oninput="validateInput(this, 'text')" required>
+                            <div class="invalid-feedback mb-1" id="lastFeedback"></div>
                         </div>
 
                         <div class="col-12 mb-3">
                             <!-- Extension -->
-                            <input type="text" class="form-control form-control-lg" id="" name="extension" placeholder="Extension">
+                            <input type="text" class="form-control form-control-lg" id="extension" name="extension" placeholder="Extension" pattern=".{2,}">
                         </div>
                     </div>
 
@@ -138,18 +132,18 @@
                         <h4>Birth Information:</h4>
                         <div class="col-12 mb-3">
                             <!-- BithDate -->
-                            <input type="date" name="birth_date" class="form-control form-control-lg birth_date" id="birth_date" placeholder="" required>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            <input type="date" name="birth_date" class="form-control form-control-lg birth_date" id="birth_date" placeholder="" oninput="validateInput(this, 'date')" required>
+                            <label for="" class="invalid-feedback mb-1" id="birth_dateFeedback"></label>
                         </div>
                         <div class="col-12 mb-3">
                             <!-- BirthPlace -->
-                            <input type="text" name="birth_place" class="form-control form-control-lg" id="" placeholder="Birthplace" required>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            <input type="text" name="birth_place" class="form-control form-control-lg" id="birth_place" placeholder="Birthplace" pattern=".{2,}" oninput="validateInput(this, 'text')" required>
+                            <label for="" class="invalid-feedback mb-1" id="birth_placeFeedback"></label>
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Citizenship -->
-                            <input type="text" name="citizenship" class="form-control form-control-lg" id="" placeholder="Citizenship" required>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            <input type="text" name="citizenship" class="form-control form-control-lg" id="citizenship" placeholder="Citizenship" oninput="validInput(this)" required>
+                            <label for="" class="invalid-feedback mb-1" id="citizenshipFeedback"></label>
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Gender -->
@@ -247,24 +241,26 @@
                         <h4>Contact Information:</h4>
                         <div class="col-12 mb-3">
                             <!-- Email Address -->
-                            <input type="email" class="form-control form-control-lg is-" name="email" id="" placeholder="Email Address" required>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            <input type="email" class="form-control form-control-lg is-" name="email" id="email" placeholder="Email Address" oninput="validateInput(this, 'email')" required>
+                            <label for="" class="invalid-feedback mb-1" id="emailFeedback"></label>
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Contact Number -->
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">+63</span>
-                                <input type="text" class="form-control form-control-lg" name="cell_no" id="" placeholder="Contact Number" required>
+                                <input type="text" class="form-control form-control-lg" name="cell_no" id="cell" placeholder="Contact Number" oninput="validateInput(this, 'contact')" pattern="[0-9]{11}" required>
+                                <label for="" class="invalid-feedback mb-1" id="cellFeedback"></label>
                             </div>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Emergency Contact -->
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">+63</span>
-                                <input type="text" class="form-control form-control-lg" name="emergency_no" id="" placeholder="Guardians's Contact Number" required>
+                                <input type="text" class="form-control form-control-lg" name="emergency_no" id="emergency" placeholder="Guardians's Contact Number" oninput="validateInput(this, 'contact')" pattern="[0-9]{11}" required>
+                                <label for="" class="invalid-feedback mb-1" id="emergencyFeedback"></label>
                             </div>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            
                         </div>
                         
                     </div>
@@ -308,25 +304,28 @@
                             <!-- 2x2 Picture -->
                             <div class="">
                                 <label for="" class="form-label">2x2 Picture</label>
-                                <input type="file" name="id_pic" id="twobytwo" class="form-control" required>
+                                <input type="file" name="id_pic" id="twobytwo" class="form-control" accept="image/*" onchange="validateInput(this, 'image')" required>
+                                <label for="" class="invalid-feedback mb-1" id="twobytwoFeedback"></label>
                             </div>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Birth Certificate -->
                             <div class="">
                                 <label for="" class="form-label">Birth Certificate</label>
-                                <input type="file" id="birth-certificate" class="form-control" name="birth_certificate" required>
+                                <input type="file" id="birth-certificate" class="form-control" name="birth_certificate" accept="image/*" onchange="validateInput(this, 'image')" required>
+                                <label for="" class="invalid-feedback mb-1" id="birth-certificateFeedback"></label>
                             </div>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            
                         </div>
                         <div class="col-12 mb-3">
                             <!-- Barangay Certificate -->
                             <div class="">
                                 <label for="" class="form-label">Barangay Certificate</label>
-                                <input type="file" id="barangay-certificate" class="form-control" name="bar_certificate" required>
+                                <input type="file" id="barangay-certificate" class="form-control" name="bar_certificate" accept="image/*" onchange="validateInput(this, 'image')" required>
+                                <label for="" class="invalid-feedback mb-1" id="barangay-certificateFeedback"></label>
                             </div>
-                            <label for="" class="invalid-feedback mb-1">Require</label>
+                            
                         </div>
                     </div>
 
@@ -339,6 +338,7 @@
             </div>
         </div>
     </body>
+    
     <!-- <script>
 
         const twoBytwo = document.getElementbyId("twobytwo");
@@ -386,6 +386,7 @@
 
     <script>
         $(document).ready(function(){
+
             $("#submit").on("submit", function(e){
             // Check the validity of each input element
             var isValid = true;
@@ -405,7 +406,178 @@
 
             // Add the 'was-validated' class to show Bootstrap validation styles
             $(this).addClass('was-validated');
-        });
+            });
+
+            $("#first, #mid, #last, #email, #cell").on("input", function () {
+                const firstName = $("#first").val().trim();
+                const middleName = $("#mid").val().trim();
+                const lastName = $("#last").val().trim();
+                const fullName = `${firstName} ${middleName} ${lastName}`.trim();
+                const email = $("#email").val().trim();
+                const contactNumber = $("#cell").val().trim();
+
+                const inputs = [fullName, email, contactNumber];
+
+                // Only perform the AJAX request if all input values are not empty
+                if (inputs.every((value) => value !== "")) {
+                    // AJAX request to check if the values already exist in the database
+                    $.ajax({
+                        type: "POST",
+                        url: "check_availability.php", // Replace with your server-side validation script
+                        data: { fullName, email, contactNumber },
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.fullName === "taken") {
+                                $("#firstFeedback").html("Full Name is already taken.");
+                                $("#midFeedback").html("");
+                                $("#lastFeedback").html("");
+                            } else {
+                                $("#firstFeedback").html("");
+                                $("#midFeedback").html("");
+                                $("#lastFeedback").html("");
+                            }
+
+                            if (response.email === "taken") {
+                                $("#emailFeedback").html("Email is already taken.");
+                            } else {
+                                $("#emailFeedback").html("");
+                            }
+
+                            if (response.contactNumber === "taken") {
+                                $("#cellFeedback").html("Contact Number is already taken.");
+                            } else {
+                                $("#cellFeedback").html("");
+                            }
+                        },
+                        error: function (error) {
+                            console.error("Error in AJAX request:", error);
+                        }
+                    });
+                }
+            });
+
         })
+
+        function validateInput(input, type) {
+
+            const feedbackElement = document.getElementById(`${input.id}Feedback`);
+            input.setCustomValidity('');
+            // //first we have to get the date input to calculate the age
+            // const birth_input = document.getElementById("birth_date").value;
+            // const birth_val = new Date(birth_input);
+
+            // //well have to calculate the month difference first
+            // const month_diff = Date.now() - birth_val;
+
+            // // convert the calculated difference in date format
+            // const age_dt = new Date(month_diff);
+
+            // //extract year from date then calculate the age of the user
+            // const year = age_dt.getUTCFullYear();
+            // const age = Math.abs(year - 1970);
+            // console.log(age);
+
+            switch (type) {
+                case 'date':
+                    validateDateInput(input, feedbackElement);
+                    break;
+                case 'contact':
+                    validateContactInput(input, feedbackElement);
+                    break;
+                case 'text':
+                    validateTextInput(input, feedbackElement);
+                    break;
+                case 'image':
+                    validateImage(input, feedbackElement);
+                    break;
+                case 'email':
+                    validateEmail(input, feedbackElement);
+                // Add more cases for other input types if needed
+            }
+        }
+
+        //This function is used to validate the age of the registrant
+        function validateDateInput(input, feedbackElement) {
+            const birthdate = new Date(input.value);
+            const today = new Date();
+            const age = today.getFullYear() - birthdate.getFullYear();
+
+            console.log(`Birthdate: ${birthdate}`);
+            console.log(`Calculated Age: ${age}`);
+
+            if (age < 60) {
+                console.log('Entering age validation branch');
+                input.setCustomValidity(`You must be at least 60 years old.`);
+                feedbackElement.innerText = `You must be at least 60 years old.`;
+            } else {
+                console.log('Entering valid branch');
+                feedbackElement.innerText = '';
+            }
+        }
+
+        //this function is used to validate the contact numbers
+        function validateContactInput(input, feedbackElement) {
+            console.log(`Contact Number: ${input.value}`);
+
+            if (!input.checkValidity()) {
+                console.log('Entering invalid branch bruh');
+                input.setCustomValidity('Please enter a valid 11-digit contact number.');
+                feedbackElement.innerText = 'Please enter a valid 11-digit contact number.';
+            } else {
+                console.log('Entering valid branch');
+                feedbackElement.innerText = '';
+            }
+        }
+
+        //this function is used to validate the text inputs
+        function validateTextInput(input, feedbackElement) {
+            console.log(`Text Input: ${input.value}`);
+
+            if (!input.checkValidity()) {
+                console.log('Entering invalid branch');
+                input.setCustomValidity('Please enter at least 2 characters.');
+                feedbackElement.innerText = 'Please enter at least 2 characters.';
+            }
+
+            else{
+                console.log('Entering valid branch');
+                feedbackElement.innerText="";
+            }
+        }
+
+        //this function is used to validate the text inputs
+        function validateEmail(input, feedbackElement) {
+            console.log(`Text Input: ${input.value}`);
+
+            if (!input.checkValidity()) {
+                console.log('Entering invalid branch');
+                input.setCustomValidity('Please enter a valid email address');
+                feedbackElement.innerText = 'Please enter a valid email address';
+            } else {
+                console.log('Entering valid branch');
+                feedbackElement.innerText = '';
+            }
+        }
+
+        //this will validate if the uploaded file is an image file
+        function validateImage(input, feedbackElement) {
+            console.log('Validating image');
+            const file = input.files[0];
+
+            if (file) {
+                const fileType = file.type;
+                const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+                if (!validImageTypes.includes(fileType)) {
+                    console.log('Entering invalid branch');
+                    input.setCustomValidity('Please choose a valid image file (JPEG, PNG, GIF).');
+                    feedbackElement.innerText = 'Please choose a valid image file (JPEG, PNG, GIF).';
+                } else {
+                    console.log('Entering valid branch');
+                    feedbackElement.innerText = '';
+                }
+            }
+        }
+
     </script>
     </html>

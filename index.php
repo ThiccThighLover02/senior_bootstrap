@@ -93,9 +93,6 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6">
-                <i class="fa-solid fa-ellipsis-h fa-2xl float-end p-4"></i>
-              </div>
             </div>
             <!-- Post header ends here -->
             <!-- Post Description -->

@@ -11,6 +11,9 @@
     <div class="offcanvas-lg offcanvas-start"  id="sideDiv">
         <ul class="nav nav-pills flex-column gap-3 side_menu_left">
           <li class="nav-item">
+            <a class="nav-link fs-5" aria-current="page" href="../index.php"><i class="fa-solid fa-arrow-left fa-xl"></i> Return</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link <?= $active === "actProfile" ? "active":""; ?> fs-5" aria-current="page" href="senior_view_profile.php?id=<?= $_SESSION['senior_id'] ?>"><img src="senior_pics/id_pics/<?= $row['id_pic'] ?>" alt="" class="img-fluid ratio ratio-1x1 rounded-circle" style="width: 3vw"> Profile</a>
           </li>
           <li class="nav-item">
