@@ -1,4 +1,18 @@
 <?php
+    date_default_timezone_set("Asia/Manila");
+    include "db_connect.php";
+    $sql = $conn->prepare("SELECT * FROM reset_tbl WHERE senior_email=? AND token=?");
+    $sql->bind_param("ss", $_GET['email'], $_GET['token']);
+    $sql->execute();
+    $result = $sql->get_result();
+    $row = mysqli_fetch_assoc($result);
+
+    if(isset($_GET['email']) && $_GET['token'] == $row['token']){
+        if($row['token_expire'] > date('Y-m-d H:i:s')){
+?>
+
+
+<?php
   session_start();
   // if(isset($_SESSION['admin_status'])){
   //   header("Location: admin/admin_home.php");
@@ -30,31 +44,24 @@
         </div>
         <div class="row text-center">
             <div class="col-12">
-                <h1>Senior Citizen Login</h1>
+                <h1>Forgot Password? HAHA</h1>
             </div>
         </div>
 
         <div class="row">
             <div class="col">
-                <form action="login_check.php" method="post" class="d-flex flex-column gap-2">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput" class="fs-4">Email Address</label>
-                    <input type="text" name="email" class="form-control form-control-lg" id="formGroupExampleInput" placeholder="">
+                <form action="send_email.php?reset=true&email=<?= $_GET['email'] ?>" method="post" class="d-flex flex-column gap-2" id="reset-form">
+                <div class="form-group">
+                    <label for="formGroupExampleInput" class="fs-4">Enter New Password:</label>
+                    <input type="password" name="new_pass" class="form-control form-control-lg" id="pass1" placeholder="" required>
                   </div>
                   <div class="form-group">
-                    <label for="formGroupExampleInput2" class="fs-4">Password</label>
-                    <input type="password" name="password" id="pass_word" class="form-control form-control-lg" id="formGroupExampleInput2" placeholder="">
+                    <label for="formGroupExampleInput" class="fs-4">Confirm Password:</label>
+                    <input type="password" name="new_pass" class="form-control form-control-lg" id="pass2" placeholder="" required>
                   </div>
-
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" style="height: 3vh; width: 3vh" onclick="show_pass()">
-                    <label for="" class="text-lg fs-5">Show Password</label>
-                  </div>
-                  <button type="submit" class="btn btn-block btn-primary text-white">Login</button>
-                  <a href="senior/senior_create_acc.php" class="btn btn-block btn-dark text-white">
-                    Sign Up
-                  </a>
-                  <a href="forgot_pass.php" class="text-center" style="text-decoration: none;">Forgot Password</a>
+                  
+                  <button type="submit" class="btn btn-block btn-primary text-white">Reset Password</button>
+                  
                 </form>
                 
 
@@ -76,6 +83,17 @@
     <?php
       }
     ?>
+    $(document).ready(function(){
+      $("#reset-form").on("submit", function(e){
+        var pass1 = $("#pass1").val();
+        var pass2 = $("#pass2").val();
+        if(pass1 != pass2){
+          e.preventDefault();
+          alert("The password does not match");
+        }
+      })
+    })
+
     function show_pass() {
       var x = document.getElementById("pass_word");
       if (x.type === "password") {
@@ -86,3 +104,15 @@
     }
 </script>
 </html>
+
+
+<?php
+        }
+        else{
+            header("Location: index.php");
+        }
+    }
+    else{
+        header("Location: index.php");
+    }
+?>

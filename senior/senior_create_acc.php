@@ -417,7 +417,7 @@
                 
             // }
 
-            checkName(fullName);
+            
 
             // Add the 'was-validated' class to show Bootstrap validation styles
             $(this).addClass('was-validated');

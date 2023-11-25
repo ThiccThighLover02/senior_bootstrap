@@ -73,6 +73,7 @@
                         <div class="col-12 mb-3">
                             <!-- Extension -->
                             <input type="text" class="form-control form-control-lg" id="extension" name="extension" placeholder="Extension" pattern=".{2,}">
+                            <div class="invalid-feedback mb-1" id="fullFeedback"></div>
                         </div>
                     </div>
 
@@ -248,7 +249,7 @@
                             <!-- Contact Number -->
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">+63</span>
-                                <input type="text" class="form-control form-control-lg" name="cell_no" id="cell" placeholder="Contact Number" oninput="validateInput(this, 'contact')" pattern="[0-9]{10, 11}" required>
+                                <input type="text" class="form-control form-control-lg" name="cell_no" id="cell" placeholder="Contact Number" oninput="validateInput(this, 'contact1')" pattern="[0-9]{10}" required>
                                 <label for="" class="invalid-feedback mb-1" id="cellFeedback"></label>
                             </div>
                             
@@ -257,7 +258,7 @@
                             <!-- Emergency Contact -->
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">+63</span>
-                                <input type="text" class="form-control form-control-lg" name="emergency_no" id="emergency" placeholder="Guardians's Contact Number" oninput="validateInput(this, 'contact')" pattern="[0-9]{10, 11}" required>
+                                <input type="text" class="form-control form-control-lg" name="emergency_no" id="emergency" placeholder="Guardians's Contact Number" oninput="validateInput(this, 'contact2')" pattern="[0-9]{10}" required>
                                 <label for="" class="invalid-feedback mb-1" id="emergencyFeedback"></label>
                             </div>
                             
@@ -386,6 +387,7 @@
 
     <script>
         $(document).ready(function(){
+
             $("#submit").on("submit", function(e){
             // Check the validity of each input element
             var isValid = true;
@@ -403,11 +405,28 @@
                 e.stopPropagation();
             }
 
+            // var firstName = document.getElementById("first");
+            // var midName = document.getElementById("mid");
+            // var lastName = document.getElementById("last");
+            // var extension = document.getElementById("extension");
+            // var fullName = "";
+            // if(firstname != '' && midName != '' && lastName != ''){
+            //     if(extension != ''){
+            //         fullName = firstName + " " + midName + " " + lastName + " " + extension;
+            //     }
+                
+            // }
+
+            
+
             // Add the 'was-validated' class to show Bootstrap validation styles
             $(this).addClass('was-validated');
             });
 
         })
+
+        const form = document.querySelector("#submit");
+
 
         function validateInput(input, type) {
 
@@ -432,8 +451,11 @@
                 case 'date':
                     validateDateInput(input, feedbackElement);
                     break;
-                case 'contact':
-                    validateContactInput(input, feedbackElement);
+                case 'contact1':
+                    validateContact1Input(input, feedbackElement);
+                    break;
+                case 'contact2':
+                    validateContact2Input(input, feedbackElement);
                     break;
                 case 'text':
                     validateTextInput(input, feedbackElement);
@@ -467,7 +489,7 @@
         }
 
         //this function is used to validate the contact numbers
-        function validateContactInput(input, feedbackElement) {
+        function validateContact1Input(input, feedbackElement) {
             console.log(`Contact Number: ${input.value}`);
 
             if (!input.checkValidity()) {
@@ -476,6 +498,58 @@
                 feedbackElement.innerText = 'Please enter a valid 11-digit contact number.';
             } else {
                 console.log('Entering valid branch');
+                let xhr = new XMLHttpRequest(); //create xml object
+                xhr.open("POST", "availability_check.php?contact1=true", true);
+                xhr.onload = ()=>{
+                    if(xhr.readyState === XMLHttpRequest.DONE){
+                        if(xhr.status === 200){
+                            let data = xhr.response;
+                            console.log(data);
+                            if(data == "exists"){
+                                input.setCustomValidity('This number is already taken');
+                                feedbackElement.innerText = 'This number is already taken';
+                            }
+                            else if(data == "available"){
+                                feedbackElement.innerText = '';
+                            }
+                        }
+                    }
+                }
+                let formData = new FormData(form);
+                xhr.send(formData);
+                feedbackElement.innerText = '';
+            }
+        }
+
+        //this function is used to validate the contact numbers
+        function validateContact2Input(input, feedbackElement) {
+            console.log(`Contact Number: ${input.value}`);
+
+            if (!input.checkValidity()) {
+                console.log('Entering invalid branch bruh');
+                input.setCustomValidity('Please enter a valid 11-digit contact number.');
+                feedbackElement.innerText = 'Please enter a valid 11-digit contact number.';
+            } else {
+                console.log('Entering valid branch');
+                let xhr = new XMLHttpRequest(); //create xml object
+                xhr.open("POST", "availability_check.php?contact2=true", true);
+                xhr.onload = ()=>{
+                    if(xhr.readyState === XMLHttpRequest.DONE){
+                        if(xhr.status === 200){
+                            let data = xhr.response;
+                            console.log(data);
+                            if(data == "exists"){
+                                input.setCustomValidity('This number is already taken');
+                                feedbackElement.innerText = 'This number is already taken';
+                            }
+                            else if(data == "available"){
+                                feedbackElement.innerText = '';
+                            }
+                        }
+                    }
+                }
+                let formData = new FormData(form);
+                xhr.send(formData);
                 feedbackElement.innerText = '';
             }
         }
@@ -488,9 +562,11 @@
                 console.log('Entering invalid branch');
                 input.setCustomValidity('Please enter at least 2 characters.');
                 feedbackElement.innerText = 'Please enter at least 2 characters.';
-            } else {
+            }
+
+            else{
                 console.log('Entering valid branch');
-                feedbackElement.innerText = '';
+                feedbackElement.innerText="";
             }
         }
 
@@ -504,6 +580,25 @@
                 feedbackElement.innerText = 'Please enter a valid email address';
             } else {
                 console.log('Entering valid branch');
+                let xhr = new XMLHttpRequest(); //create xml object
+                xhr.open("POST", "availability_check.php?email=true", true);
+                xhr.onload = ()=>{
+                    if(xhr.readyState === XMLHttpRequest.DONE){
+                        if(xhr.status === 200){
+                            let data = xhr.response;
+                            console.log(data);
+                            if(data == "exists"){
+                                input.setCustomValidity('This email is already registered');
+                                feedbackElement.innerText = 'This email is already registered';
+                            }
+                            else if(data == "available"){
+                                feedbackElement.innerText = '';
+                            }
+                        }
+                    }
+                }
+                let formData = new FormData(form);
+                xhr.send(formData);
                 feedbackElement.innerText = '';
             }
         }

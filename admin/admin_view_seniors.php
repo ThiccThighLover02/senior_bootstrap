@@ -143,7 +143,7 @@
                     $data_array = json_encode($data);
                     $labels_array = json_encode($labels);
                     $color_array = json_encode($color);
-                    $type = "pie";
+                    $type = "bar";
                     $sex_hidden = "";
                   }
                 break;
@@ -642,7 +642,7 @@
     data: {
         labels: Object.values(arrayLabel),
         datasets: [{
-        label: '# of Votes',
+        label: 'No. of Seniors',
         data: Object.values(arrayData),
         backgroundColor: Object.values(arrayColor),
         borderWidth: 1
@@ -672,6 +672,6 @@
     }
     // If there are no sessions you will be redirected back to the landing page
     else {
-        header("Location: index.php");
+        header("Location: ../index.php");
     }
 ?>

@@ -131,12 +131,6 @@
               <!-- address and birthdate   -->
               <div class="row">
                 <div class="col-lg-6 d-flex flex-column">
-                    <h2 class="text-primary">Password:</h3>
-                    <input type="password" id="pass_word" class="form-control" placholder="" value="<?= $row['senior_password'] ?>">
-                    <input type="button" class="btn btn-primary text-white mt-3" value="Show password" onclick=show_pass()>
-
-                </div>
-                <div class="col-lg-6 d-flex flex-column">
                 <h2 class="text-primary">Account Created:</h3>
                     <p class="fs-5"><?= $acc_created->format("M d, Y H:ia") ?></p>
                 </div>
@@ -270,7 +264,7 @@
     } else {
         console.error('Failed to open the print window.');
     }
-}
+  }
 
     
   </script>

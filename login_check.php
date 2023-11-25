@@ -23,14 +23,14 @@ if (isset($_POST['email']) && isset($_POST['password'])){
     $pass = validate($_POST['password']); #get the password using the post method
 
     #We will be using prepared statement for more security
-    $senior = $conn->prepare("SELECT * FROM senior_tbl WHERE senior_email=? AND senior_password=?"); #select all from your table where the username is equal to $uname and password is equal to $pass
-    $senior->bind_param("ss", $username, $pass);
+    $senior = $conn->prepare("SELECT * FROM senior_tbl WHERE senior_email=?"); #select all from your table where the username is equal to $uname and password is equal to $pass
+    $senior->bind_param("s", $username);
     $senior->execute();
     $result = $senior->get_result();
     $row = $senior->num_rows();
 
-    $admin = $conn->prepare("SELECT * FROM admin_tbl WHERE admin_username=? AND admin_password=?");
-    $admin->bind_param("ss", $username, $pass);
+    $admin = $conn->prepare("SELECT * FROM admin_tbl WHERE admin_username=?");
+    $admin->bind_param("s", $username);
     $admin->execute();
     $admin_result = $admin->get_result();
     $admin_row = mysqli_num_rows($admin_result);
@@ -56,7 +56,7 @@ if (isset($_POST['email']) && isset($_POST['password'])){
         $stmt->execute();
         */
 
-        if ($row['senior_email'] === $username && $row['senior_password'] === $pass) { //if the username and password is correct this code will run
+        if ($row['senior_email'] === $username && password_verify($pass, $row['senior_password'])) { //if the username and password is correct this code will run
 
             $_SESSION['senior_status'] = "Active";
 
